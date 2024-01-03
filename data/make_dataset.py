@@ -22,10 +22,10 @@ def load_images_and_labels(base_path, folder_names, standard_size):
     return all_images, labels
 
 # Define the paths to the training and testing folders
-base_path_training = r"C:\Users\mads.brodthagen\MLOps-Project\data\raw\Training"  # Replace with your path
-base_path_testing = r"C:\Users\mads.brodthagen\MLOps-Project\data\raw\Testing"    # Replace with your path
+base_path_training = r"C:\Users\mads.brodthagen\MLOps-Project\data\raw\Training"  
+base_path_testing = r"C:\Users\mads.brodthagen\MLOps-Project\data\raw\Testing"   
 folder_names = ["glioma", "meningioma", "notumor", "pituitary"]
-standard_size = (128, 128)  # Adjust as needed
+standard_size = (128, 128)
 
 # Load training and testing data
 training_images, training_labels = load_images_and_labels(base_path_training, folder_names, standard_size)
