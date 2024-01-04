@@ -1,0 +1,5 @@
+plot_folder: ~src/visualizations
+hyperparameters:
+  lr: 0.001
+  batch_size: 256
+  num_epochs: 20

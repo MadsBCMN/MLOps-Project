@@ -3,10 +3,10 @@ import torch
 def mnist():
     """Return train and test dataloaders for your MRI dataset."""
     # Load training and testing data
-    train_data = torch.load(r"C:\Users\mads.brodthagen\MLOps-Project\data\proces\training_images.pt").float()
-    train_labels = torch.load(r"C:\Users\mads.brodthagen\MLOps-Project\data\proces\training_labels.pt")
-    test_data = torch.load(r"C:\Users\mads.brodthagen\MLOps-Project\data\proces\testing_images.pt").float()
-    test_labels = torch.load(r"C:\Users\mads.brodthagen\MLOps-Project\data\proces\testing_labels.pt")
+    train_data = torch.load(r"/Users/helenehjort/Library/Mobile Documents/com~apple~CloudDocs/Human-centered AI/9. semester/02476 Machine Learning Operations/Project/MLOps-Project/data/proces/training_images.pt").float()
+    train_labels = torch.load(r"/Users/helenehjort/Library/Mobile Documents/com~apple~CloudDocs/Human-centered AI/9. semester/02476 Machine Learning Operations/Project/MLOps-Project/data/proces/training_labels.pt")
+    test_data = torch.load(r"/Users/helenehjort/Library/Mobile Documents/com~apple~CloudDocs/Human-centered AI/9. semester/02476 Machine Learning Operations/Project/MLOps-Project/data/proces/testing_images.pt").float()
+    test_labels = torch.load(r"/Users/helenehjort/Library/Mobile Documents/com~apple~CloudDocs/Human-centered AI/9. semester/02476 Machine Learning Operations/Project/MLOps-Project/data/proces/testing_labels.pt")
 
     print(train_data.shape)
     print(train_labels.shape)

@@ -6,36 +6,34 @@ from torch.utils.data import DataLoader
 from model import myawesomemodel
 from dataloader import mnist
 import os
+from omegaconf import OmegaConf
+import hydra
+import logging
+
+log = logging.getLogger(__name__)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-@click.group()
-def cli():
-    """Command line interface."""
-    pass
-
-@click.command()
-@click.option("--lr", default=1e-3, help="learning rate to use for training")
-@click.option("--batch_size", default=256, help="batch size to use for training")
-@click.option("--num_epochs", default=20, help="number of epochs to train for")
-def train(lr, batch_size, num_epochs):
+@hydra.main(config_path="config", config_name="config.yaml")
+def train(cfg):
+    log = logging.getLogger(__name__)
     # Load data
     train_dataset, test_dataset = mnist()
-    train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
-    test_loader = DataLoader(test_dataset, batch_size=batch_size, shuffle=False)
-
+    train_loader = DataLoader(train_dataset, batch_size=cfg.hyperparameters.batch_size, shuffle=True)
+    test_loader = DataLoader(test_dataset, batch_size=cfg.hyperparameters.batch_size, shuffle=False)
+    log.info("data load complete")
     # Model
     model = myawesomemodel().to(device)
 
     # Loss and optimizer
     criterion = nn.CrossEntropyLoss()
-    optimizer = torch.optim.Adam(model.parameters(), lr=lr)
+    optimizer = torch.optim.Adam(model.parameters(), lr=cfg.hyperparameters.lr)
 
     train_losses = []
     test_accuracies = []
 
     # Training loop
-    for epoch in range(num_epochs):
+    for epoch in range(cfg.hyperparameters.num_epochs):
         model.train()
         total_loss = 0
         for i, (images, labels) in enumerate(train_loader):
@@ -53,8 +51,9 @@ def train(lr, batch_size, num_epochs):
 
         avg_loss = total_loss / len(train_loader)
         train_losses.append(avg_loss)
-        print(f'Epoch [{epoch+1}/{num_epochs}], Average Training Loss: {avg_loss:.4f}')
-
+        #print(f'Epoch [{epoch+1}/{cfg.hyperparameters.num_epochs}], Average Training Loss: {avg_loss:.4f}')
+        log.info(f'Epoch [{epoch+1}/{cfg.hyperparameters.num_epochs}], Average Training Loss: {avg_loss:.4f}')
+        
         # Validation step
         model.eval()
         correct = 0
@@ -69,7 +68,8 @@ def train(lr, batch_size, num_epochs):
 
         accuracy = 100 * correct / total
         test_accuracies.append(accuracy)
-        print(f'Epoch [{epoch+1}/{num_epochs}], Test Accuracy: {accuracy:.2f} %')
+        #print(f'Epoch [{epoch+1}/{cfg.hyperparameters.num_epochs}], Test Accuracy: {accuracy:.2f} %')
+        log.info(f'Epoch [{epoch+1}/{cfg.hyperparameters.num_epochs}], Test Accuracy: {accuracy:.2f} %')
 
     torch.save(model.state_dict(), "model.pt")
 
@@ -84,13 +84,13 @@ def train(lr, batch_size, num_epochs):
     plt.grid(True)
 
     # Create a distinct folder for the plot
-    plot_folder = r"C:\Users\mads.brodthagen\MLOps-Project\reports\figures"
+    plot_folder = r"/Users/helenehjort/Library/Mobile Documents/com~apple~CloudDocs/Human-centered AI/9. semester/02476 Machine Learning Operations/Project/MLOps-Project/src/visualizations"
     if not os.path.exists(plot_folder):
         os.makedirs(plot_folder)
     
     plt.savefig(os.path.join(plot_folder, "training_progress.png"))
 
-cli.add_command(train)
-
 if __name__ == "__main__":
-    cli()
+    log_fmt = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+    logging.basicConfig(filename='train_model.log', level=logging.INFO, format=log_fmt, filemode='w')
+    train()
