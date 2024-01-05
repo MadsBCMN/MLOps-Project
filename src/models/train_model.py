@@ -14,6 +14,7 @@ log = logging.getLogger(__name__)
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
+
 @hydra.main(config_path="config", config_name="config.yaml")
 def train(cfg):
     log = logging.getLogger(__name__)
