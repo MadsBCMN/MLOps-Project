@@ -48,4 +48,4 @@ for epoch in range(num_epochs):
     accuracy = 100 * correct / total
     print(f'Accuracy on the test set after epoch {epoch+1}: {accuracy}%')
 
-torch.save(model.state_dict(), 'model.pt')
+torch.save(model.state_dict(), '../models/model.pt')
