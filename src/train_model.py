@@ -5,7 +5,7 @@ import torch
 import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader
-from models.model import model
+from models.model import timm_model
 from data.dataloader import dataloader
 from omegaconf import OmegaConf
 import hydra
@@ -18,11 +18,21 @@ os.chdir(sys.path[0])
 log = logging.getLogger(__name__)
 
 @hydra.main(config_path="config", config_name="config.yaml")
-def train(config):
+def train(config: OmegaConf) -> None:
+    """
+    Train the model using the provided configuration and model.py.
+
+    Args:
+        cfg (OmegaConf): Configuration parameters.
+
+    Returns:
+        None
+    """
     hparams = config.hyperparameters
     run = wandb.init(project="MLOps_project", config=OmegaConf.to_container(hparams, resolve=True, throw_on_missing=True))
     torch.manual_seed(hparams["seed"])
     device = "cuda" if torch.cuda.is_available() else "cpu"
+    model = timm_model()
     model.to(device)
 
     # Setup wandb model logging

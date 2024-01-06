@@ -1,0 +1,45 @@
+{
+    "os": "macOS-10.16-x86_64-i386-64bit",
+    "python": "3.10.13",
+    "heartbeatAt": "2024-01-06T18:45:33.318013",
+    "startedAt": "2024-01-06T18:45:32.693424",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "/Users/helenehjort/Library/Mobile Documents/com~apple~CloudDocs/Human-centered AI/9. semester/02476 Machine Learning Operations/Project/MLOps-Project/src/train_model.py",
+    "codePathLocal": null,
+    "codePath": "src/train_model.py",
+    "git": {
+        "remote": "https://github.com/MadsBCMN/MLOps-Project.git",
+        "commit": "2c3e75b22635e698d39f2fb032f756c68c1c7f69"
+    },
+    "email": "helene.hjort@live.dk",
+    "root": "/Users/helenehjort/Library/Mobile Documents/com~apple~CloudDocs/Human-centered AI/9. semester/02476 Machine Learning Operations/Project/MLOps-Project",
+    "host": "MBPtilhdeHelene",
+    "username": "helenehjort",
+    "executable": "/Users/helenehjort/opt/anaconda3/envs/final_exercise/bin/python",
+    "cpu_count": 8,
+    "cpu_count_logical": 8,
+    "cpu_freq": {
+        "current": 2400,
+        "min": 2400,
+        "max": 2400
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2400,
+            "min": 2400,
+            "max": 2400
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 228.27386474609375,
+            "used": 203.94053268432617
+        }
+    },
+    "memory": {
+        "total": 8.0
+    }
+}
