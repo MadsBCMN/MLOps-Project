@@ -1,0 +1,176 @@
+diff --git a/src/data/dataloader.py b/src/data/dataloader.py
+index 5c64ae9..7ba78df 100644
+--- a/src/data/dataloader.py
++++ b/src/data/dataloader.py
+@@ -1,4 +1,5 @@
+ import torch
++import os
+ 
+ def dataloader():
+     """Return train and test dataloaders for your MRI dataset."""
+diff --git a/src/models/config/config.yaml b/src/models/config/config.yaml
+deleted file mode 100644
+index 236e0fb..0000000
+--- a/src/models/config/config.yaml
++++ /dev/null
+@@ -1,4 +0,0 @@
+-hyperparameters:
+-  lr: 1e-3
+-  batch_size: 256
+-  num_epochs: 2
+\ No newline at end of file
+diff --git a/src/models/config/default_config.yaml b/src/models/config/default_config.yaml
+deleted file mode 100644
+index 5c2c291..0000000
+--- a/src/models/config/default_config.yaml
++++ /dev/null
+@@ -1,2 +0,0 @@
+-defaults:
+-    - experiments: exp1
+diff --git a/src/models/config/experiments/exp1.yaml b/src/models/config/experiments/exp1.yaml
+deleted file mode 100644
+index 967ca9f..0000000
+--- a/src/models/config/experiments/exp1.yaml
++++ /dev/null
+@@ -1,4 +0,0 @@
+-# @package _group_
+-lr: 1e-5
+-batch_size: 256
+-num_epochs: 10
+diff --git a/src/models/config/experiments/exp2.yaml b/src/models/config/experiments/exp2.yaml
+deleted file mode 100644
+index 9c29a1c..0000000
+--- a/src/models/config/experiments/exp2.yaml
++++ /dev/null
+@@ -1,4 +0,0 @@
+-# @package _group_
+-  lr: 1e-3
+-  batch_size: 256
+-  num_epochs: 10
+diff --git a/src/train_model.py b/src/train_model.py
+index 44fba67..eeb171b 100644
+--- a/src/train_model.py
++++ b/src/train_model.py
+@@ -1,56 +1,78 @@
+ import os
+ import sys
++import logging
+ import torch
+ import torch.nn as nn
+ import torch.optim as optim
+ from torch.utils.data import DataLoader, TensorDataset
+-import timm
+ from models.model import model
+ from data.dataloader import dataloader
++from omegaconf import OmegaConf
++import hydra
++import wandb
+ 
+ # Set the working directory to the current directory
+ os.chdir(sys.path[0])
+ 
+-# Load your datasets
+-train_dataset, test_dataset = dataloader()
+-train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
+-test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
+-
+-criterion = nn.CrossEntropyLoss()
+-optimizer = optim.Adam(model.parameters(), lr=0.001)
+-
+-num_epochs = 4  # Define the number of training epochs
+-
+-for epoch in range(num_epochs):
+-    # Training Phase
+-    model.train()
+-    total_loss = 0
+-    for images, labels in train_loader:
+-        # Forward pass
+-        outputs = model(images)
+-        loss = criterion(outputs, labels)
+-
+-        # Backward and optimize
+-        optimizer.zero_grad()
+-        loss.backward()
+-        optimizer.step()
+-
+-        total_loss += loss.item()
+-
+-    print(f"Epoch [{epoch+1}/{num_epochs}], Loss: {total_loss/len(train_loader)}")
+-
+-    # Evaluation Phase
+-    model.eval()
+-    correct = 0
+-    total = 0
+-    with torch.no_grad():
+-        for images, labels in test_loader:
+-            outputs = model(images)
+-            _, predicted = torch.max(outputs.data, 1)
+-            total += labels.size(0)
+-            correct += (predicted == labels).sum().item()
+-
+-    accuracy = 100 * correct / total
+-    print(f'Accuracy on the test set after epoch {epoch+1}: {accuracy}%')
+-
+-torch.save(model.state_dict(), '../models/model.pt')
++# setup logging
++log = logging.getLogger(__name__)
++
++@hydra.main(config_path="config", config_name="config.yaml")
++def train(config):
++    hparams = config.hyperparameters
++    run = wandb.init(project="MLOps_project", config=OmegaConf.to_container(hparams, resolve=True, throw_on_missing=True))
++    torch.manual_seed(hparams["seed"])
++    device = "cuda" if torch.cuda.is_available() else "cpu"
++
++    # Setup wandb model logging
++    wandb.watch(model, log_freq=100)
++
++    # Load your datasets
++    train_dataset, test_dataset = dataloader()
++    train_loader = DataLoader(train_dataset, batch_size=hparams["batch_size"], shuffle=True)
++    test_loader = DataLoader(test_dataset, batch_size=hparams["batch_size"], shuffle=False)
++
++    criterion = nn.CrossEntropyLoss()
++    optimizer = optim.Adam(model.parameters(), lr=hparams["lr"])
++
++    for epoch in range(hparams["n_epochs"]):
++        # Training Phase
++        model.train()
++        total_loss = 0
++        for images, labels in train_loader:
++            # Forward pass
++            outputs = model(images.to(device))
++            loss = criterion(outputs, labels.to(device))
++            run.log({"loss": loss.item()})
++            # Backward and optimize
++            optimizer.zero_grad()
++            loss.backward()
++            optimizer.step()
++
++            total_loss += loss.item()
++
++        log.info(f"Epoch [{epoch+1}/{hparams['n_epochs']}], Loss: {total_loss/len(train_loader)}")
++
++        # Evaluation Phase
++        model.eval()
++        correct = 0
++        total = 0
++        with torch.no_grad():
++            for images, labels in test_loader:
++                outputs = model(images.to(device))
++                _, predicted = torch.max(outputs.data, 1)
++                total += labels.size(0)
++                correct += (predicted == labels).sum().item()
++
++        accuracy = 100 * correct / total
++        run.log({"accuracy": accuracy})
++        log.info(f'Accuracy on the test set after epoch {epoch+1}: {accuracy}%')
++
++    torch.save(model.state_dict(), '../models/model.pt')
++    run.log_model(path='../models/model.pt', name="resnet18")
++    log.info("Model saved")
++
++    run.finish()
++
++if __name__ == "__main__":
++    train()
