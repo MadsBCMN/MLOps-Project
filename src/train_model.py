@@ -1,3 +1,5 @@
+import os
+import sys
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -5,6 +7,9 @@ from torch.utils.data import DataLoader, TensorDataset
 import timm
 from models.model import model
 from data.dataloader import dataloader
+
+# Set the working directory to the current directory
+os.chdir(sys.path[0])
 
 # Load your datasets
 train_dataset, test_dataset = dataloader()

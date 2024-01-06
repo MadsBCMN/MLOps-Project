@@ -1,8 +1,14 @@
 import os
+import sys
 import numpy as np
 from PIL import Image
 import torch
 
+# Pull the raw and processed data from the data folder
+os.system('dvc pull')
+
+# Set the working directory to the current directory
+os.chdir(sys.path[0])
 
 def load_images_and_labels(base_path, folder_names, standard_size):
     all_images = []
@@ -22,8 +28,8 @@ def load_images_and_labels(base_path, folder_names, standard_size):
     return all_images, labels
 
 # Define the paths to the training and testing folders
-base_path_training = r"..\..\data\raw\Training"  
-base_path_testing = r"..\..\data\raw\Testing"   
+base_path_training = os.path.normpath("../../data/raw/Training")
+base_path_testing = os.path.normpath("../../data/raw/Testing")
 folder_names = ["glioma", "meningioma", "notumor", "pituitary"]
 standard_size = (86, 86)
 
@@ -38,7 +44,7 @@ testing_images_tensor = torch.tensor(testing_images)
 testing_labels_tensor = torch.tensor(testing_labels)
 
 # Define the path for the new folder to store the tensors
-tensor_storage_path = r"..\..\data\proces"  # Replace with your desired path
+tensor_storage_path = os.path.normpath("../../data/processed")
 
 # Create the folder if it doesn't exist
 os.makedirs(tensor_storage_path, exist_ok=True)
