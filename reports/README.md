@@ -112,11 +112,11 @@ end of the project.
 >
 > Example:
 >
-> *s194665, s194663, s184208 *
+> *sXXXXXX, sXXXXXX, sXXXXXX *
 >
 > Answer:
 
---- question 2 fill here ---
+--- s194665, s194663, s184208 ---
 
 ### Question 3
 > **What framework did you choose to work with and did it help you complete the project?**
