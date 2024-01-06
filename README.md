@@ -1,8 +1,23 @@
-# MLOps-Project
+# MLOps-Project 
+## Image Brain Tumor Classification (MRI)
 
-Final project
+Exam project for course 02476 Machine Learning Operations at the Technical University of Denmark (DTU)
+
+### Project Goal
+The goal of this project is to develop an efficient machine learning model capable of predicting types of brain tumors from MRI images. The emphasis is on delivering a functional solution, focusing on MLOps practices with the entire pipeline, from data acquisition, model training, and deployment to monitoring and optimization. 
+
+### Framework
+For the prediction of brain tumors, we have chosen the TIMM framework, specifically tailored for Computer Vision tasks in PyTorch.
+We will use this framework to construct a deep learning model and include the framework as part of our environment.
+
+### Data
+This model is trained on the [Brain Tumor Classification MRI Dataset](https://www.kaggle.com/datasets/sartajbhuvaji/brain-tumor-classification-mri) dataset from Kaggle. It consists of 3264 images in jpg format (93.08 MB). The dataset is divided into a training (88%) and a test dataset (12%), each divided into four types of brain tumors: glioma, meningioma, pituitary, or no tumor.
+
+### Models
+The project aims to explore a deep learning architectures for image classification, focusing on convolutional neural networks (CNNs). We use the ResNet-18 architecture, available through the TIMM (PyTorch Image Models) framework, for image classification. The choice is driven by TIMM's extensive collection of pre-trained models, with ResNet-18 offering a balanced trade-off between model complexity and computational efficiency.
 
 ## Project structure
+
 
 The directory structure of the project looks like this:
 
