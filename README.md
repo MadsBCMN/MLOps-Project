@@ -1,7 +1,7 @@
 # MLOps-Project 
-## Image Brain Tumor Classification (MRI)
+## Image Classification of Brain Tumors from MRI
 
-Exam project for course 02476 Machine Learning Operations at the Technical University of Denmark (DTU)
+Exam project for course 02476 Machine Learning Operations at the Technical University of Denmark (DTU).
 
 ### Project Goal
 The goal of this project is to develop an efficient machine learning model capable of predicting types of brain tumors from MRI images. The emphasis is on delivering a functional solution, focusing on MLOps practices with the entire pipeline, from data acquisition, model training, and deployment to monitoring and optimization. 
