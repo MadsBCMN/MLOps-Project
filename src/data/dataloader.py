@@ -1,6 +1,6 @@
 import torch
 
-def mnist():
+def dataloader():
     """Return train and test dataloaders for your MRI dataset."""
     # Load training and testing data
     train_data = torch.load(r"../data/proces/training_images.pt").float()

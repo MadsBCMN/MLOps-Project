@@ -3,19 +3,11 @@ import torch.nn as nn
 import torch.optim as optim
 from torch.utils.data import DataLoader, TensorDataset
 import timm
-from dataloader import mnist
-
-model_name = 'resnet18'  # Use a lighter model for faster training
-num_classes = 4  # Replace with the number of classes in your dataset
-
-# Load the pretrained model
-model = timm.create_model(model_name, pretrained=True, in_chans=1)
-
-# Modify the classifier (assuming the last layer is named 'fc')
-model.fc = nn.Linear(model.fc.in_features, num_classes)
+from models.model import model
+from data.dataloader import dataloader
 
 # Load your datasets
-train_dataset, test_dataset = mnist()
+train_dataset, test_dataset = dataloader()
 train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
 test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
 

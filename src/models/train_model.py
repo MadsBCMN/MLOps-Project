@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from torch import nn
 from torch.utils.data import DataLoader
 from model import myawesomemodel
-from dataloader import mnist
+from src.data.dataloader import mnist
 import os
 from omegaconf import OmegaConf
 import hydra
