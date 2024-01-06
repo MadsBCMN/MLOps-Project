@@ -11,7 +11,7 @@ For the prediction of brain tumors, we have chosen the TIMM framework, specifica
 We will use this framework to construct a deep learning model and include the framework as part of our environment.
 
 ### Data
-This model is trained on the [Brain Tumor Classification MRI Dataset](https://www.kaggle.com/datasets/sartajbhuvaji/brain-tumor-classification-mri) dataset from Kaggle. It consists of 3264 images in jpg format (93.08 MB). The dataset is divided into a training (88%) and a test dataset (12%), each divided into four types of brain tumors: glioma, meningioma, pituitary, or no tumor.
+This model is trained on the [Brain Tumor Classification MRI](https://www.kaggle.com/datasets/sartajbhuvaji/brain-tumor-classification-mri) dataset from Kaggle. It consists of 3264 images in jpg format (93.08 MB). The dataset is divided into a training (88%) and a test dataset (12%), each divided into four types of brain tumors: glioma, meningioma, pituitary, or no tumor.
 
 ### Models
 The project aims to explore a deep learning architectures for image classification, focusing on convolutional neural networks (CNNs). We use the ResNet-18 architecture, available through the TIMM (PyTorch Image Models) framework, for image classification. The choice is driven by TIMM's extensive collection of pre-trained models, with ResNet-18 offering a balanced trade-off between model complexity and computational efficiency.

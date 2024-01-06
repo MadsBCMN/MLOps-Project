@@ -129,7 +129,7 @@ end of the project.
 >
 > Answer:
 
---- question 3 fill here ---
+--- We have chosen to use the TIMM (PyTorch Image Models) framework for our image classification project. Specifically, we used the ResNet-18 architecture from TIMM. The extensive collection of pre-trained models in TIMM made it easy to experiment with different architectures without building them from scratch. TIMM is used to facilitate the development of our deep learning model and streamline the process of creating a custom model based on the ResNet-18 architecture with a modified output layer. In addition, we saw the advantages of the TIMM framework as it converges faster during training compared to a model we tested without using TIMM. ---
 
 ## Coding environment
 
@@ -148,7 +148,7 @@ end of the project.
 >
 > Answer:
 
---- question 4 fill here ---
+--- We managed dependencies using a dedicated environment and the requirements.txt file. To replicate our environment, a new team member must create a virtual environment, install the required packages listed in requirements.txt using the pip install -r requirements.txt command, and activate the virtual environment. Additionally, they should clone the project repository using git clone https://github.com/MadsBCMN/MLOps-Project, navigate to the project directory with cd MLOps-Project, and then pull the data files using Data Version Control (DVC) with dvc pull. This ensures that the team member has the correct Python packages installed and retrieves the necessary data files. We used Hydra for configuration management, ensuring that hyperparameters and configurations were easily accessible and modifiable. To test the model for other hyperparameters, new team members can, e.g., utilize the python train_model.py hyperparameters.lr=1e-3 command, replacing the hyperparameter values as needed.  ---
 
 ### Question 5
 
@@ -163,7 +163,9 @@ end of the project.
 > *experiments.*
 > Answer:
 
---- question 5 fill here ---
+--- From the cookiecutter template, we filled  The "src" folder contains the main source code, including data handling, model implementation, visualization, an training and prediction script. We used the folders "data," "models," and "output" to store the data and output from the source code. We utilized the "config" folder for managing configurations with Hydra, making hyperparameter tuning and configuration adjustments. The "tests" folder includes unit tests for data and model components.
+
+*** NOTE REVISIT *** ---
 
 ### Question 6
 
@@ -174,7 +176,7 @@ end of the project.
 >
 > Answer:
 
---- question 6 fill here ---
+--- We complied with PEP8 coding standards for code quality and format using global variables, docstring comments, typing, and informative comments. Consistent coding standards are essential to improve readability, maintainability, and collaboration in larger projects. They promote a consistent style, making it easier for others to understand and contribute. Adhering to good code quality also makes controlling and automating debugging easier. ---
 
 ## Version control
 
