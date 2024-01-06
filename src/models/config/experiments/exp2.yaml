@@ -1,4 +1,0 @@
-# @package _group_
-  lr: 1e-3
-  batch_size: 256
-  num_epochs: 10

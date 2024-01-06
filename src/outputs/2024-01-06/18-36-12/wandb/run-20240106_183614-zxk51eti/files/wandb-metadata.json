@@ -1,0 +1,53 @@
+{
+    "os": "Windows-10-10.0.22631-SP0",
+    "python": "3.11.7",
+    "heartbeatAt": "2024-01-06T17:36:15.523807",
+    "startedAt": "2024-01-06T17:36:14.510600",
+    "docker": null,
+    "cuda": null,
+    "args": [],
+    "state": "running",
+    "program": "E:\\OneDrive - Cordes\\DTU\\02476 MLOps\\MLOps-Project\\src\\train_model.py",
+    "codePathLocal": "..\\..\\..\\train_model.py",
+    "codePath": "src\\train_model.py",
+    "git": {
+        "remote": "https://github.com/MadsBCMN/MLOps-Project.git",
+        "commit": "4fccc9b322d4606228273e0413311752ac08f8b7"
+    },
+    "email": "s184208@student.dtu.dk",
+    "root": "E:/OneDrive - Cordes/DTU/02476 MLOps/MLOps-Project",
+    "host": "TUFROQ_2",
+    "username": "steff",
+    "executable": "C:\\Users\\steff\\anaconda3\\envs\\mlops\\python.exe",
+    "cpu_count": 16,
+    "cpu_count_logical": 24,
+    "cpu_freq": {
+        "current": 3200.0,
+        "min": 0.0,
+        "max": 3200.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 3200.0,
+            "min": 0.0,
+            "max": 3200.0
+        }
+    ],
+    "disk": {
+        "/": {
+            "total": 1843.4873008728027,
+            "used": 731.189811706543
+        }
+    },
+    "gpu": "NVIDIA GeForce RTX 4090",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce RTX 4090",
+            "memory_total": 25757220864
+        }
+    ],
+    "memory": {
+        "total": 127.74727630615234
+    }
+}
