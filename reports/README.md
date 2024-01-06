@@ -105,14 +105,14 @@ end of the project.
 >
 > Answer:
 
---- question 1 fill here ---
+--- 34 ---
 
 ### Question 2
 > **Enter the study number for each member in the group**
 >
 > Example:
 >
-> *sXXXXXX, sXXXXXX, sXXXXXX*
+> *s194665, s194663, s184208 *
 >
 > Answer:
 
