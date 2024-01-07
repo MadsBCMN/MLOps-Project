@@ -128,12 +128,14 @@ def train_evaluate(config: OmegaConf) -> None:
 
                     # Evaluation Phase
                     accuracy = evaluate(model, fold_val_loader, device)
-                    fold_accuracies.append(accuracy)  # Store fold accuracy
+
 
                     # Log validation accuracy with fold and epoch information
                     run.log({"fold": fold + 1, "epoch": epoch + 1, "val_accuracy": accuracy})
                     log.info(f'Fold {fold + 1}, Epoch {epoch + 1}: Validation Accuracy: {accuracy}%')
-                    # log.info(f'Accuracy on the {"validation" if params["validate"] else "test"} set after epoch {epoch + 1}: {accuracy}%')
+
+                fold_accuracies.append(accuracy)  # Store fold accuracy
+
             mean_accuracy = sum(fold_accuracies) / len(fold_accuracies)
             run.log({"mean_val_accuracy": mean_accuracy})
             log.info(f'Mean Validation Accuracy across {k_folds} folds: {mean_accuracy}%')
