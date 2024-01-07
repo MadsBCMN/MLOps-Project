@@ -28,7 +28,7 @@ def train(config: OmegaConf) -> None:
     Returns:
         None
     """
-    hparams = config.hyperparameters
+    hparams = config
     run = wandb.init(project="MLOps_project", config=OmegaConf.to_container(hparams, resolve=True, throw_on_missing=True))
     torch.manual_seed(hparams["seed"])
     device = "cuda" if torch.cuda.is_available() else "cpu"
