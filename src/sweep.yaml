@@ -1,4 +1,4 @@
-program: train_model.py
+program: train_model_lightning.py
 method: bayes
 metric:
   name: mean_val_accuracy
