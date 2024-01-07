@@ -1,0 +1,26 @@
+program: train_model.py
+method: bayes
+metric:
+  name: mean_val_accuracy
+  goal: maximize
+parameters:
+  lr:
+    distribution: 'uniform'
+    min: 0.0001
+    max: 0.1
+  batch_size:
+    distribution: 'q_log_uniform_values'
+    q: 8
+    min: 8
+    max: 256
+  n_epochs:
+    distribution: 'q_log_uniform_values'
+    q: 1
+    min: 1
+    max: 20
+
+command:
+  - ${env}
+  - python
+  - ${program}
+  - ${args_no_hyphens}
