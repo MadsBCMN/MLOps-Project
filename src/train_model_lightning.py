@@ -18,6 +18,13 @@ os.chdir(sys.path[0])
 # setup logging
 log = logging.getLogger(__name__)
 
+# Set the default precision
+torch.set_float32_matmul_precision('medium')
+
+# Setting dataloader worker seed
+def seed_worker(worker_id):
+    worker_seed = torch.initial_seed() % 2 ** 32
+
 class LightningModel(pl.LightningModule):
     def __init__(self, hparams):
         super().__init__()
@@ -48,6 +55,17 @@ class LightningModel(pl.LightningModule):
         self.log('val_accuracy', accuracy, on_step=True, on_epoch=True, prog_bar=True)
         return {'val_loss': loss, 'val_accuracy': accuracy}
 
+    def test_step(self, batch, batch_idx):
+        images, labels = batch
+        outputs = self(images)
+        loss = self.criterion(outputs, labels)
+        _, predicted = torch.max(outputs.data, 1)
+        correct = (predicted == labels).sum().item()
+        total = labels.size(0)
+        accuracy = 100 * correct / total
+        self.log('test_accuracy', accuracy, on_step=True, on_epoch=True, prog_bar=True)
+        return {'test_loss': loss, 'test_accuracy': accuracy}
+
     def on_validation_epoch_end(self):
         avg_val_accuracy = torch.tensor(self.validation_outputs).mean()
         self.log('avg_val_accuracy', avg_val_accuracy, prog_bar=True)
@@ -58,17 +76,31 @@ class LightningModel(pl.LightningModule):
 
     def train_dataloader(self):
         train_dataset, _ = dataloader()
-        return DataLoader(train_dataset, batch_size=self.hparams.batch_size, shuffle=True)
+        return DataLoader(train_dataset, batch_size=self.hparams.batch_size, shuffle=True, worker_init_fn=seed_worker)
 
     def val_dataloader(self):
-        _, test_dataset = dataloader()
-        return DataLoader(test_dataset, batch_size=self.hparams.batch_size)
+        print("val_dataloader")
+        _, val_dataset = dataloader()
+        return DataLoader(val_dataset, batch_size=self.hparams.batch_size, shuffle=False, worker_init_fn=seed_worker)
 
-@hydra.main(config_path="config", config_name="config.yaml")
+    def test_dataloader(self):
+        print("test_dataloader")
+        _, test_dataset = dataloader()
+        return DataLoader(test_dataset, batch_size=self.hparams.batch_size, shuffle=False, worker_init_fn=seed_worker)
+
+
+
+@hydra.main(config_path="config", config_name="config.yaml", version_base=None)
 def train_evaluate(config: OmegaConf) -> None:
     hparams = OmegaConf.to_container(config, resolve=True)
     run = wandb.init(project="MLOps_project", config=hparams)
     wandb_logger = WandbLogger()
+
+    # Setting the seed
+    torch.manual_seed(hparams["seed"])
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(hparams["seed"])
+
 
     if config.k_fold:
         fold_accuracies = []  # Store accuracies for each fold
@@ -85,14 +117,15 @@ def train_evaluate(config: OmegaConf) -> None:
                 logger=wandb_logger,
                 max_epochs=config.n_epochs,
                 devices=1 if torch.cuda.is_available() else 0,
-                accelerator="gpu" if torch.cuda.is_available() else "cpu"
+                accelerator="gpu" if torch.cuda.is_available() else "cpu",
+                log_every_n_steps=10
             )
 
             train_subsampler = Subset(train_dataset, train_ids)
             val_subsampler = Subset(train_dataset, val_ids)
 
-            train_loader = DataLoader(train_subsampler, batch_size=config.batch_size, shuffle=True)
-            val_loader = DataLoader(val_subsampler, batch_size=config.batch_size)
+            train_loader = DataLoader(train_subsampler, batch_size=config.batch_size, shuffle=True, worker_init_fn=seed_worker)
+            val_loader = DataLoader(val_subsampler, batch_size=config.batch_size, shuffle=False, worker_init_fn=seed_worker)
 
             trainer.fit(model, train_loader, val_loader)
 
@@ -111,9 +144,13 @@ def train_evaluate(config: OmegaConf) -> None:
             logger=wandb_logger,
             max_epochs=config.n_epochs,
             devices=1 if torch.cuda.is_available() else 0,
-            accelerator="gpu" if torch.cuda.is_available() else "cpu"
+            accelerator="gpu" if torch.cuda.is_available() else "cpu",
+            log_every_n_steps=10
         )
         trainer.fit(model)
+
+        # Perform test evaluation using the test_dataloader method
+        trainer.test(model)
 
     # Finish wandb run
     run.finish()
