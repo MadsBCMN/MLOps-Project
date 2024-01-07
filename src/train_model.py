@@ -18,6 +18,8 @@ os.chdir(sys.path[0])
 # setup logging
 log = logging.getLogger(__name__)
 
+
+
 @hydra.main(config_path="config", config_name="config.yaml")
 def train_evaluate(config: OmegaConf) -> None:
     """
