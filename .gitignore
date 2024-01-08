@@ -177,4 +177,4 @@ cython_debug/
 .idea/
 
 # Profiling results will be handled by dvc
-profiler/
+/profiler
