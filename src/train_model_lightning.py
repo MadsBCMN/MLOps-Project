@@ -11,6 +11,7 @@ from omegaconf import OmegaConf
 import hydra
 import wandb
 from pytorch_lightning.loggers import WandbLogger
+from torch.profiler import profile, tensorboard_trace_handler, ProfilerActivity
 
 # Set the working directory to the current directory
 os.chdir(sys.path[0])
@@ -103,6 +104,11 @@ def train_evaluate(config: OmegaConf) -> None:
 
 
     if config.k_fold:
+        # set profiler
+        if config.profile:
+            prof = profile(activities=[ProfilerActivity.CPU, ProfilerActivity.CUDA], profile_memory=True, record_shapes=True, on_trace_ready=tensorboard_trace_handler("./profiler/resnet18_lightning_5fold_cv"))
+            prof.start()
+
         fold_accuracies = []  # Store accuracies for each fold
         train_dataset, _ = dataloader()
         kfold = KFold(n_splits=5, shuffle=True, random_state=config.seed)
@@ -137,6 +143,8 @@ def train_evaluate(config: OmegaConf) -> None:
         mean_accuracy = torch.tensor(fold_accuracies).mean().item()
         wandb_logger.log_metrics({"mean_val_accuracy": mean_accuracy})
         log.info(f"Mean Validation Accuracy across folds: {mean_accuracy}%")
+        if config.profile:
+            prof.stop()
     else:
         # Standard train-test split
         model = LightningModel(hparams)
