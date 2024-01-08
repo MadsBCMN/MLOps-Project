@@ -160,6 +160,12 @@ def train_evaluate(config: OmegaConf) -> None:
         # Perform test evaluation using the test_dataloader method
         trainer.test(model)
 
+    # Save the final model
+    torch.save(model.state_dict(), '../models/model.pt')
+    run.log_model(path='../models/model.pt', name="resnet18")
+    log.info("Model saved")
+
+
     # Finish wandb run
     run.finish()
 
