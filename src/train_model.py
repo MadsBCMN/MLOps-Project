@@ -19,6 +19,12 @@ os.chdir(sys.path[0])
 # setup logging
 log = logging.getLogger(__name__)
 
+# Set the default precision
+torch.set_float32_matmul_precision('medium')
+
+# Setting dataloader worker seed
+def seed_worker(worker_id):
+    worker_seed = torch.initial_seed() % 2 ** 32
 
 @hydra.main(config_path="config", config_name="config.yaml")
 def train_evaluate(config: OmegaConf) -> None:
@@ -33,7 +39,10 @@ def train_evaluate(config: OmegaConf) -> None:
     """
     hparams = config
     run = wandb.init(project="MLOps_project", config=OmegaConf.to_container(hparams, resolve=True, throw_on_missing=True))
+    # Setting the seed
     torch.manual_seed(hparams["seed"])
+    if torch.cuda.is_available():
+        torch.cuda.manual_seed_all(hparams["seed"])
     device = "cuda" if torch.cuda.is_available() else "cpu"
 
     # Evaluation
@@ -100,8 +109,8 @@ def train_evaluate(config: OmegaConf) -> None:
                 val_subsampler = Subset(train_dataset, val_ids)
 
                 # Create data loaders for this fold
-                fold_train_loader = DataLoader(train_subsampler, batch_size=params["batch_size"], shuffle=True)
-                fold_val_loader = DataLoader(val_subsampler, batch_size=params["batch_size"], shuffle=False)
+                fold_train_loader = DataLoader(train_subsampler, batch_size=params["batch_size"], shuffle=True, worker_init_fn=seed_worker)
+                fold_val_loader = DataLoader(val_subsampler, batch_size=params["batch_size"], shuffle=False, worker_init_fn=seed_worker)
 
                 # Initialize a new model each fold
                 model = timm_model()
@@ -192,8 +201,8 @@ def train_evaluate(config: OmegaConf) -> None:
 
     # Load datasets
     train_dataset, test_dataset = dataloader()
-    train_loader = DataLoader(train_dataset, batch_size=hparams["batch_size"], shuffle=True)
-    test_loader = DataLoader(test_dataset, batch_size=hparams["batch_size"], shuffle=False)
+    train_loader = DataLoader(train_dataset, batch_size=hparams["batch_size"], shuffle=True, worker_init_fn=seed_worker)
+    test_loader = DataLoader(test_dataset, batch_size=hparams["batch_size"], shuffle=False, worker_init_fn=seed_worker)
 
     # Train model
     train_model(train_loader, test_loader, device, params=hparams)
