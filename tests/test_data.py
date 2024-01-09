@@ -7,8 +7,7 @@ from tests.config import assert_images
 from src.data.config import image_size
 import pytest
 
-@pytest.mark.skipif(not os.path.exists("data/raw"), reason="Data files not found")
-@pytest.mark.skipif(not os.path.exists("data/processed"), reason="Data files not found")
+@pytest.mark.skipif(not os.path.exists("data/processed/Training"), reason="Data files not found")
 
 def test_data():
     n_train, lt_train = assert_images("data/raw/Training")

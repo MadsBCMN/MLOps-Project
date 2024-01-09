@@ -22,5 +22,5 @@ def load_model(model_path):
 def test_model():
     model = load_model("models/model.pt")
     assert model(torch.rand(1,1,image_size[0],image_size[1])).size() == (1,4) , "The output shape is not correct. Expected four categories"
-
+    
 test_model()
