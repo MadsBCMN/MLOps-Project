@@ -38,6 +38,17 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
         pip install -r requirements_tests.txt
+    - name: Get dvc cache directory
+      id: dvc-cache-dir
+      run: |
+          echo "::set-output name=dir::$(dvc cache dir)"
+    - uses: actions/cache@v3
+      id: dvc-cache # use this to check for `cache-hit` ==> if: steps.dvc-cache.outputs.cache-hit != 'true'
+      with:
+        path: ${{ steps.dvc-cache-dir.outputs.dir }}
+        key: ${{ runner.os }}-dvc-${{ hashFiles('*') }}
+        restore-keys: |
+          ${{ runner.os }}-dvc-
     - name: Get data
       run: dvc pull
     - name: Test with pytest
