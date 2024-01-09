@@ -13,7 +13,9 @@ import numpy as np
 def load_model(model_path):
     model = timm_model()
     # Load the saved model weights
-    model.load_state_dict(torch.load(model_path, map_location=torch.device('cpu')))
+    state_dict = torch.load("models/model.pt")
+    state_dict = {k.partition('model.')[2]:state_dict[k] for k in state_dict.keys()}
+    model.load_state_dict(state_dict)
     model.eval()
     return model
 
@@ -42,7 +44,7 @@ def predict(model, image_folder):
     return predictions
 
 if __name__ == '__main__':
-    
+
     model_path = "../models/model.pt"  # Path to the saved model
     image_folder = "../data/example_images"  # Path to the folder with images
 
