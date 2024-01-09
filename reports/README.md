@@ -195,7 +195,7 @@ end of the project.
 >
 > Answer:
 
---- question 7 fill here ---
+--- In total, we have implemented two tests for our project. These tests primarily focus on testing the correct data loading and model prediction functionality. The first test verifies that the data loader correctly loads the training and test images, and the second test ensures that the model output has the expected four categories. Since we used DVC for managing data, the test_data.py is not checking the data as it is set to skip our data test. ---
 
 ### Question 8
 
@@ -210,7 +210,7 @@ end of the project.
 >
 > Answer:
 
---- question 8 fill here ---
+--- The total code coverage of our project is 100%. This means that all of the code in our project has been executed at least once during testing. While 100% code coverage does not guarantee error-free code, it can increase the likelihood of detecting and fixing bugs early in development. Therefore, we can still not trust the code to be error free or work as intended. ---
 
 ### Question 9
 
@@ -225,7 +225,8 @@ end of the project.
 >
 > Answer:
 
---- question 9 fill here ---
+--- Yes, our workflow included using branches and pull requests to some extent. We often worked together on projects or different files, so using different branches was only sometimes necessary. When we worked independently, each team member had their own branch for working on new features or bug fixes. Before merging the code into the main branch, they would create a pull request that other team members could review and comment on. This process helped to ensure that all changes were well-tested and documented before being integrated into the main code.
+*** NOTE REVISIT *** ---
 
 ### Question 10
 
@@ -240,7 +241,7 @@ end of the project.
 >
 > Answer:
 
---- question 10 fill here ---
+--- Yes, we did use DVC to manage data in our project. DVC is a data version control tool that allows us to track and store the different versions of our data, ensuring that we can reproduce our results and compare different iterations of our models. We primarily did this so the data didn't have to be stored in GitHub. However, it was not necessary for our project as the data is relatively small and straightforward to manage. ---
 
 ### Question 11
 
@@ -256,7 +257,8 @@ end of the project.
 >
 > Answer:
 
---- question 11 fill here ---
+--- We have implemented a continuous integration (CI) workflow using GitHub Actions. This workflow automatically runs unit tests whenever a change is pushed to the repository. It also ensures the project builds and runs correctly on multiple operating systems and Python versions.
+*** NOTE REVISIT *** ---
 
 ## Running code and tracking experiments
 
