@@ -1,10 +1,13 @@
 import os
 import sys
 from torch.utils.data import DataLoader
-import tests
-print("YOYOYO", tests._PROJECT_ROOT)
-
+from __init__ import _PROJECT_ROOT
+sys.path.append(_PROJECT_ROOT)
 from src.data.dataloader import dataloader
+
+
+
+
 
 def test_data():
     dataset_train, dataset_test = dataloader()
