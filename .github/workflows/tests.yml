@@ -51,7 +51,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-dvc-
     - name: Get data
-      run: dvc pull
+      run: dvc pull -vv
     - name: Test with pytest
       run: |
         pip install pytest
