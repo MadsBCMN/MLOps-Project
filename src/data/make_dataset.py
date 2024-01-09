@@ -3,12 +3,13 @@ import sys
 import numpy as np
 from PIL import Image
 import torch
+from src.data.config import image_size
 
 # Pull the raw and processed data from the data folder
 os.system('dvc pull')
 
 # Set the working directory to the current directory
-os.chdir(sys.path[0])
+sys.path.append(os.path.normcase(os.getcwd()))
 
 def load_images_and_labels(base_path, folder_names, standard_size):
     all_images = []
@@ -31,8 +32,7 @@ def load_images_and_labels(base_path, folder_names, standard_size):
 base_path_training = os.path.normpath("../../data/raw/Training")
 base_path_testing = os.path.normpath("../../data/raw/Testing")
 folder_names = ["glioma", "meningioma", "notumor", "pituitary"]
-standard_size = (86, 86)
-
+standard_size = image_size
 # Load training and testing data
 training_images, training_labels = load_images_and_labels(base_path_training, folder_names, standard_size)
 testing_images, testing_labels = load_images_and_labels(base_path_testing, folder_names, standard_size)

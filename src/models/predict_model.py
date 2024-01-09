@@ -8,6 +8,8 @@ import timm
 from models.model import timm_model
 import numpy as np
 
+
+
 def load_model(model_path):
     model = timm_model()
     # Load the saved model weights
@@ -41,8 +43,8 @@ def predict(model, image_folder):
 
 if __name__ == '__main__':
     
-    model_path = sys.argv[1]  # Path to the saved model
-    image_folder = sys.argv[2]  # Path to the folder with images
+    model_path = "../models/model.pt"  # Path to the saved model
+    image_folder = "../data/example_images"  # Path to the folder with images
 
     model = load_model(model_path)
 
