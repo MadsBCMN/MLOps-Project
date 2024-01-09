@@ -8,7 +8,7 @@ import timm
 import numpy as np
 sys.path.append(os.path.normcase(os.getcwd()))
 from src.models.model import timm_model
-
+from src.data.config import image_size
 
 def load_model(model_path):
     model = timm_model()
@@ -21,6 +21,6 @@ def load_model(model_path):
 
 def test_model():
     model = load_model("models/model.pt")
-    assert model(torch.rand(1,1,86,86)).size() == (1,4) , "The output shape is not correct. Expected four categories"
+    assert model(torch.rand(1,1,image_size[0],image_size[1])).size() == (1,4) , "The output shape is not correct. Expected four categories"
 
 test_model()
