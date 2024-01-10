@@ -9,10 +9,16 @@ import pytest
 
 
 
+
 def test_data():
+    # Set the working directory to the current directory
+    os.chdir(sys.path[0])
+
     n_train, lt_train = assert_images("data/raw/Training")
     n_test, lt_test = assert_images("data/raw/Testing")
 
+
+    print("get data loaders")
     dataset_train, dataset_test = dataloader()
 
     assert len(dataset_train) == n_train, "The number of training tensors is not equal to the number of training images"

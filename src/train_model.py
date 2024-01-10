@@ -13,8 +13,9 @@ import hydra
 import wandb
 from torch.profiler import profile, tensorboard_trace_handler, ProfilerActivity
 
-# Set the working directory to the current directory
-os.chdir(sys.path[0])
+# Set the working directory to project root
+os.chdir(os.path.dirname(sys.path[0]))
+sys.path.append(os.path.normcase(os.getcwd()))
 
 # setup logging
 log = logging.getLogger(__name__)

@@ -4,3 +4,6 @@ n_epochs: 20
 seed: 42
 k_fold: False
 profile: False
+hydra:
+  job:
+    chdir: False
