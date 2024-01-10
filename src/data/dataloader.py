@@ -10,10 +10,10 @@ def dataloader() -> torch.utils.data.Dataset:
 
 
     # Load training and testing data
-    train_data = torch.load(os.path.normpath("data/processed/training_images.pt")).float()
-    train_labels = torch.load(os.path.normpath("data/processed/training_labels.pt"))
-    test_data = torch.load(os.path.normpath("data/processed/testing_images.pt")).float()
-    test_labels = torch.load(os.path.normpath("data/processed/testing_labels.pt"))
+    train_data = torch.load(os.path.normpath("../data/processed/training_images.pt")).float()
+    train_labels = torch.load(os.path.normpath("../data/processed/training_labels.pt"))
+    test_data = torch.load(os.path.normpath("../data/processed/testing_images.pt")).float()
+    test_labels = torch.load(os.path.normpath("../data/processed/testing_labels.pt"))
 
     # Unsqueeze the data tensors to add a channel dimension
     train_data = train_data.unsqueeze(1)
