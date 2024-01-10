@@ -194,8 +194,8 @@ def train_evaluate(config: OmegaConf) -> None:
                 log.info(f'Epoch {epoch + 1}: Test Accuracy: {accuracy}%')
 
         # Save the final model
-        torch.save(model.state_dict(), '../models/model.pt')
-        run.log_model(path='../models/model.pt', name="resnet18")
+        torch.save(model.state_dict(), 'models/model.pt')
+        run.log_model(path='models/model.pt', name="resnet18")
         log.info("Model saved")
 
 
