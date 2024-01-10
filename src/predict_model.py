@@ -1,25 +1,49 @@
-import torch
-import torch.nn as nn
 import os
 import sys
-from torchvision import transforms
-from PIL import Image
-import timm
-from models.model import timm_model
+from typing import List
+import torch
+import torch.nn as nn
 import numpy as np
+from PIL import Image
+from torchvision import transforms
+from models.model import timm_model
+import logging
 
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
+sys.path.append(os.path.normcase(os.getcwd()))
 
-def load_model(model_path):
+def load_model(model_path: str) -> nn.Module:
+    """
+    Load a pre-trained model from the specified path.
+
+    Parameters:
+    - model_path (str): Path to the saved model.
+
+    Returns:
+    - model (nn.Module): Loaded model.
+    """
     model = timm_model()
+
     # Load the saved model weights
-    state_dict = torch.load("models/model.pt")
-    state_dict = {k.partition('model.')[2]:state_dict[k] for k in state_dict.keys()}
+    state_dict = torch.load(model_path)
+    state_dict = {k.partition('model.')[2]: state_dict[k] for k in state_dict.keys()}
     model.load_state_dict(state_dict)
     model.eval()
     return model
 
-def process_image(image_path):
+
+def process_image(image_path: str) -> torch.Tensor:
+    """
+    Process an image for prediction.
+
+    Parameters:
+    - image_path (str): Path to the input image.
+
+    Returns:
+    - image_tensor (torch.Tensor): Processed image tensor.
+    """
     transform = transforms.Compose([
         transforms.Grayscale(num_output_channels=1),
         transforms.Resize((86, 86)),
@@ -32,25 +56,44 @@ def process_image(image_path):
     image_tensor = image_tensor.unsqueeze(0).unsqueeze(0)  # Add batch and channel dimensions
     return image_tensor
 
-def predict(model, image_folder):
+
+def predict(model: nn.Module, image_folder: str) -> List[int]:
+    """
+    Make predictions on images in the specified folder using the given model.
+
+    Parameters:
+    - model (nn.Module): Trained model.
+    - image_folder (str): Path to the folder with images.
+
+    Returns:
+    - predictions (List[int]): List of predicted classes.
+    """
     predictions = []
-    for f in os.listdir(image_folder):
-        if f.endswith(('.png', '.jpg', '.jpeg')):
-            image_path = os.path.join(image_folder, f)
+    for filename in os.listdir(image_folder):
+        if filename.endswith(('.png', '.jpg', '.jpeg')):
+            image_path = os.path.join(image_folder, filename)
             image = process_image(image_path)
             output = model(image)
             _, predicted = torch.max(output.data, 1)
             predictions.append(predicted.item())
     return predictions
 
+
 if __name__ == '__main__':
+    model_path = "models/model.pt"  # Path to the saved model
+    image_folder = "data/example_images"  # Path to the folder with images
 
-    model_path = "../models/model.pt"  # Path to the saved model
-    image_folder = "../data/example_images"  # Path to the folder with images
+    try:
+        model = load_model(model_path)
+    except Exception as e:
+        logger.error(f"Error loading the model: {e}")
+        sys.exit(1)
 
-    model = load_model(model_path)
-
-    predictions = predict(model, image_folder)
+    try:
+        predictions = predict(model, image_folder)
+    except Exception as e:
+        logger.error(f"Error making predictions: {e}")
+        sys.exit(1)
 
     for i, pred in enumerate(predictions):
-        print(f'Image {i}: Class {pred}')
+        logger.info(f'Image {i}: Class {pred}')
