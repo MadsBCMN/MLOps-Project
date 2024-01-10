@@ -51,7 +51,7 @@ jobs:
         restore-keys: |
           ${{ runner.os }}-dvc-
     - name: Get data and unpack
-      run: python src\data\unpack_data.py
+      run: python src/data/unpack_data.py
     - name: Test with pytest
       run: |
         pip install pytest
