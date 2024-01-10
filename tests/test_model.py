@@ -10,6 +10,9 @@ sys.path.append(os.path.normcase(os.getcwd()))
 from src.models.model import timm_model
 from src.data.config import image_size
 
+# Set the working directory to the current directory
+os.chdir(sys.path[0])
+
 def load_model(model_path):
     model = timm_model()
     # Load the saved model weights
