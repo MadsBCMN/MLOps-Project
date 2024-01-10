@@ -1,11 +1,6 @@
 import torch
 import os
-import sys
-# sys.path.append(os.path.normcase(os.getcwd()))
-# from data import _DATA_ROOT
-# from data import _PROJECT_ROOT
-# from data import _PATH_DATA
-# from data import _SRC_ROOT
+
 
 def dataloader() -> torch.utils.data.Dataset:
     """Return train and test dataloaders for your MRI dataset."""
