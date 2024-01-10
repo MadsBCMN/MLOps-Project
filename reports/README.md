@@ -195,7 +195,7 @@ end of the project.
 >
 > Answer:
 
---- In total, we have implemented two tests for our project. These tests primarily focus on testing the correct data loading and model prediction functionality. The first test verifies that the data loader correctly loads the training and test images, and the second test ensures that the model output has the expected four categories. Since we used DVC for managing data, the test_data.py is not checking the data as it is set to skip our data test. ---
+--- In total, we have implemented two tests for our project. These tests primarily focus on testing the correct data loading and model prediction functionality. The test_data function tests the data loading and preprocessing pipeline. It checks whether the number of training and test tensors matches the number of corresponding images, validates the shapes of the tensors, and ensures that the labels are correct. The test_model function, on the other hand, assesses the correctness of the model's output shape by feeding random input data into the loaded model and comparing the output shape with the expected shape of (1,4) for four categories. ---
 
 ### Question 8
 
@@ -210,7 +210,9 @@ end of the project.
 >
 > Answer:
 
---- The total code coverage of our project is 100%. This means that all of the code in our project has been executed at least once during testing. While 100% code coverage does not guarantee error-free code, it can increase the likelihood of detecting and fixing bugs early in development. Therefore, we can still not trust the code to be error free or work as intended. ---
+--- The total code coverage of our project is 100%. This means that all of the code in our project has been executed at least once during testing. While 100% code coverage does not guarantee error-free code, it can increase the likelihood of detecting and fixing bugs early in development. Therefore, we can still not trust the code to be error free or work as intended as it does not cover aspects like logical errors or incorrect business logic. ---
+
+
 
 ### Question 9
 
@@ -225,7 +227,7 @@ end of the project.
 >
 > Answer:
 
---- Yes, our workflow included using branches and pull requests to some extent. We often worked together on projects or different files, so using different branches was only sometimes necessary. When we worked independently, each team member had their own branch for working on new features or bug fixes. Before merging the code into the main branch, they would create a pull request that other team members could review and comment on. This process helped to ensure that all changes were well-tested and documented before being integrated into the main code.
+--- Yes, our workflow included using branches and pull requests to some extent. We often worked together on the project or in different files, so using different branches was only sometimes necessary. When we worked independently, each team member had their own branch for working on new features or bug fixes. Before merging the code into the main branch, we would create a pull request that other team members could review and comment on. This process helped to ensure that all changes were well-tested and documented before being integrated into the main code.
 *** NOTE REVISIT *** ---
 
 ### Question 10
@@ -241,7 +243,9 @@ end of the project.
 >
 > Answer:
 
---- Yes, we did use DVC to manage data in our project. DVC is a data version control tool that allows us to track and store the different versions of our data, ensuring that we can reproduce our results and compare different iterations of our models. We primarily did this so the data didn't have to be stored in GitHub. However, it was not necessary for our project as the data is relatively small and straightforward to manage. ---
+--- Yes, we did use DVC to manage data in our project. DVC is a data version control tool that allows us to track and store the different versions of our data, ensuring that we can reproduce our results and compare different iterations of our models. We primarily used dvc as a more optimal data learning solution rather than storing the 7GB in our github repository.
+*** NOTE REVISIT ***  ---
+
 
 ### Question 11
 
@@ -257,7 +261,7 @@ end of the project.
 >
 > Answer:
 
---- We have implemented a continuous integration (CI) workflow using GitHub Actions. This workflow automatically runs unit tests whenever a change is pushed to the repository. It also ensures the project builds and runs correctly on multiple operating systems and Python versions.
+--- We have implemented a continuous integration (CI) workflow using GitHub Actions. In our continuous integration setup, we've structured the CI pipeline into a single workflow named "Run tests." This workflow automatically runs unit tests whenever a change is pushed to the repository. It also ensures the project builds and runs correctly on multiple operating systems and Python versions. The dependencies, including project dependencies and test requirements specified in requirements.txt and requirements_tests.txt, are cached for faster subsequent runs using GitHub Actions' caching mechanism. The DVC cache is also cached separately, enhancing the efficiency of data retrieval during testing. The CI workflow includes testing with pytest to validate the code's functionality. This ensures that unit tests are executed, providing feedback on the correctness of the codebase.
 *** NOTE REVISIT *** ---
 
 ## Running code and tracking experiments
@@ -277,7 +281,7 @@ end of the project.
 >
 > Answer:
 
---- question 12 fill here ---
+--- Yes, we ensured reconfigurability and reproducibility by employing config files for experiments. We utilized multiple configuration files to test different variables and scenarios (see exp1.yaml and exp2.yaml). we also used argparser to do quick tests along the way, looking like this: python your_script.py --lr 0.0005 --batch_size 40 --n_epochs 20 --seed 42 --k_fold --profile. Finally, we did a parameter sweep approach to systematically explore various hyperparameter combinations and find the most optimal hyperparameter. However, we discovered that the parameters from this test overfitted the model, and therefore, we didn't get a very good prediction, so we ended up  ---
 
 ### Question 13
 
@@ -292,7 +296,7 @@ end of the project.
 >
 > Answer:
 
---- question 13 fill here ---
+--- To ensure reproducibility, we used the logging module to log configuration parameters, such as learning rate, batch size, number of epochs, seed, k-fold, and profiling, which are logged at different steps in the script. An overview of the experimental setup is saved, and this way, we could always go back and reproduce an experiment by going to the log file src/outputs/, which provides an overview of the configuration and details of the training and evaluation phases. ---
 
 ### Question 14
 
