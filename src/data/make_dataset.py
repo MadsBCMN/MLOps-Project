@@ -10,8 +10,6 @@ from data.config import image_size
 from data.unpack_data import unpack_raw_data
 
 
-
-
 def load_images_and_labels(base_path, folder_names, standard_size):
     all_images = []
     labels = []
