@@ -11,7 +11,7 @@ from data.config import image_size
 
 
 # Pull the raw and processed data from the data folder
-# os.system('dvc pull')
+os.system('dvc pull')
 
 # Unzip the raw data
 with zipfile.ZipFile("../data/raw/Training.zip", 'r') as zip_ref:
