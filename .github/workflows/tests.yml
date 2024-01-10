@@ -50,8 +50,8 @@ jobs:
         key: ${{ runner.os }}-dvc-${{ hashFiles('*') }}
         restore-keys: |
           ${{ runner.os }}-dvc-
-    - name: Get data
-      run: dvc pull -vv
+    - name: Get data and unpack
+      run: python src\data\unpack_data.py
     - name: Test with pytest
       run: |
         pip install pytest
