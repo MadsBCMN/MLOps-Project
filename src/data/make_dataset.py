@@ -6,19 +6,10 @@ sys.path.append(os.path.normcase(os.getcwd()))
 import numpy as np
 from PIL import Image
 import torch
-import zipfile
 from data.config import image_size
+from data.unpack_data import unpack_raw_data
 
 
-# Pull the raw and processed data from the data folder
-os.system('dvc pull')
-
-# Unzip the raw data
-with zipfile.ZipFile("../data/raw/Training.zip", 'r') as zip_ref:
-    zip_ref.extractall("../data/raw/")
-
-with zipfile.ZipFile("../data/raw/Testing.zip", 'r') as zip_ref:
-    zip_ref.extractall("../data/raw/")
 
 def load_images_and_labels(base_path, folder_names, standard_size):
     all_images = []
@@ -36,6 +27,10 @@ def load_images_and_labels(base_path, folder_names, standard_size):
                 labels.append(label)
 
     return all_images, labels
+
+
+# Pull and unpack data
+unpack_raw_data()
 
 # Define the paths to the training and testing folders
 base_path_training = os.path.normpath("../data/raw/Training")

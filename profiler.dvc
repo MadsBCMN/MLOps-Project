@@ -2,17 +2,17 @@ outs:
 - hash: md5
   path: profiler
   files:
-  - relpath: resnet18_5fold_cv/TUFROQ_2_43956.1704717052917059500.pt.trace.json
-    md5: 061a2c61d9640520a0d4fb934dfebe0f
-    size: 2052160101
+  - relpath: resnet18_5fold_cv/TUFROQ_2_43956.1704717052917059500.pt.trace.json.zip
+    md5: af337465705aca0e37c37702a9773d54
+    size: 95499647
     cloud:
       remote_storage:
-        etag: 0894a6b392c6d083031001
-        version_id: '1704811607937812'
-  - relpath: resnet18_lightning_5fold_cv/TUFROQ_2_8580.1704718761140029900.pt.trace.json
-    md5: 890d202e782ac92826d3449e976468ed
-    size: 2067348775
+        etag: 0894b0ade0d4d383031001
+        version_id: '1704918608730132'
+  - relpath: resnet18_lightning_5fold_cv/TUFROQ_2_8580.1704718761140029900.pt.trace.json.zip
+    md5: c3005a847bc33e4a0d4731340622976b
+    size: 96750556
     cloud:
       remote_storage:
-        etag: 08c0a0b7e3c5d083031001
-        version_id: '1704811509436480'
+        etag: 08bbc8d7ded4d383031001
+        version_id: '1704918605227067'
