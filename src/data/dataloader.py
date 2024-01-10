@@ -1,13 +1,14 @@
 import torch
 import os
 import sys
-sys.path.append(os.path.normcase(os.getcwd()))
+# sys.path.append(os.path.normcase(os.getcwd()))
+# from data import _DATA_ROOT
+# from data import _PROJECT_ROOT
+# from data import _PATH_DATA
+# from data import _SRC_ROOT
 
 def dataloader() -> torch.utils.data.Dataset:
     """Return train and test dataloaders for your MRI dataset."""
-    # Set the working directory to the current directory
-    os.chdir(sys.path[0])
-
 
     # Load training and testing data
     train_data = torch.load(os.path.normpath("data/processed/training_images.pt")).float()

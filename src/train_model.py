@@ -13,8 +13,9 @@ import hydra
 import wandb
 from torch.profiler import profile, tensorboard_trace_handler, ProfilerActivity
 
-# Set the working directory to the current directory
-os.chdir(sys.path[0])
+# Set the working directory to project root
+os.chdir(os.path.dirname(sys.path[0]))
+sys.path.append(os.path.normcase(os.getcwd()))
 
 # setup logging
 log = logging.getLogger(__name__)
@@ -193,8 +194,8 @@ def train_evaluate(config: OmegaConf) -> None:
                 log.info(f'Epoch {epoch + 1}: Test Accuracy: {accuracy}%')
 
         # Save the final model
-        torch.save(model.state_dict(), '../models/model.pt')
-        run.log_model(path='../models/model.pt', name="resnet18")
+        torch.save(model.state_dict(), 'models/model.pt')
+        run.log_model(path='models/model.pt', name="resnet18")
         log.info("Model saved")
 
 
