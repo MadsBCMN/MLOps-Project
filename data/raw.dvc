@@ -1,6 +1,25 @@
 outs:
-- md5: 8082b08641fb2a62d7b650d79febfe04.dir
-  size: 155787523
-  nfiles: 3
-  hash: md5
+- hash: md5
   path: raw
+  files:
+  - relpath: .gitkeep
+    md5: d41d8cd98f00b204e9800998ecf8427e
+    size: 0
+    cloud:
+      remote_storage:
+        etag: 08d4cbc5cdd4d383031001
+        version_id: '1704918569280980'
+  - relpath: Testing.zip
+    md5: f9865e47c27ea1476ba4e225d50ea30b
+    size: 25594513
+    cloud:
+      remote_storage:
+        etag: 08aab6bccdd4d383031001
+        version_id: '1704918569130794'
+  - relpath: Training.zip
+    md5: e9f307c9ae95bc61594a2dd319b1ad8e
+    size: 130193010
+    cloud:
+      remote_storage:
+        etag: 08b6debfe2d4d383031001
+        version_id: '1704918613225270'
