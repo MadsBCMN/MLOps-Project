@@ -122,7 +122,7 @@ def train_evaluate(config: OmegaConf) -> None:
             trainer = pl.Trainer(
                 logger=wandb_logger,
                 max_epochs=config.n_epochs,
-                devices=1 if torch.cuda.is_available() else 0,
+                devices=1,
                 accelerator="gpu" if torch.cuda.is_available() else "cpu",
                 log_every_n_steps=10
             )
@@ -151,7 +151,7 @@ def train_evaluate(config: OmegaConf) -> None:
         trainer = pl.Trainer(
             logger=wandb_logger,
             max_epochs=config.n_epochs,
-            devices=1 if torch.cuda.is_available() else 0,
+            devices=1,
             accelerator="gpu" if torch.cuda.is_available() else "cpu",
             log_every_n_steps=10
         )
