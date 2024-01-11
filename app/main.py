@@ -62,6 +62,7 @@ def process_image(image: Image.Image) -> torch.Tensor:
     image_tensor = image_tensor.unsqueeze(0).unsqueeze(0)
     return image_tensor
 
+#hej
 @app.post("/classify")
 async def classify_image(file: UploadFile = File(...)):
     try:
