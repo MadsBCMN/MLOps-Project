@@ -13,7 +13,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 sys.path.append(os.path.normcase(os.getcwd()))
-
+CLASS_LABELS = ['glioma', 'meningioma', 'no_tumor', 'pituitary']
 def load_model(model_path: str) -> nn.Module:
     """
     Load a pre-trained model from the specified path.
@@ -75,7 +75,8 @@ def predict(model: nn.Module, image_folder: str) -> List[int]:
             image = process_image(image_path)
             output = model(image)
             _, predicted = torch.max(output.data, 1)
-            predictions.append(predicted.item())
+            predicted_label = CLASS_LABELS[predicted.item()]
+            predictions.append((filename, predicted_label))
     return predictions
 
 
@@ -95,5 +96,5 @@ if __name__ == '__main__':
         logger.error(f"Error making predictions: {e}")
         sys.exit(1)
 
-    for i, pred in enumerate(predictions):
-        logger.info(f'Image {i}: Class {pred}')
+    for filename, pred in predictions:
+        logger.info(f'Image {filename}: Class {pred}')

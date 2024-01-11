@@ -1,14 +1,41 @@
-from src.models.model import timm_model
-from fastapi import FastAPI, HTTPException, File, UploadFile
-from pydantic import BaseModel
+import io
+import os
+import sys
+sys.path.append(os.path.normcase(os.getcwd()))
+from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
-from typing import Optional
 import torch
-import timm
 import numpy as np
+from PIL import Image
+from torchvision import transforms
+import torch
+import torch.nn as nn
+import timm
+from fastapi import HTTPException
+
+### MODEL ####
+# Global variables
+MODEL_NAME = 'resnet18'
+NUM_CLASSES = 4
+
+def timm_model() -> nn.Module:
+    """
+    Creates a custom model based on timm's resnet18 with modified output layer.
+
+    Returns:
+        nn.Module: Custom model.
+    """
+    # Load pre-trained resnet18 model
+    model = timm.create_model(MODEL_NAME, pretrained=True, in_chans=1)
+
+    # Modify the output layer to match the number of classes
+    model.fc = nn.Linear(model.fc.in_features, NUM_CLASSES)
+
+    return model
+#####################
 
 app = FastAPI()
-
+CLASS_LABELS = ['glioma', 'meningioma', 'no_tumor', 'pituitary']
 def load_model(model_path):
     model = timm_model()
     state_dict = torch.load(model_path, map_location=torch.device('cpu'))
@@ -17,56 +44,44 @@ def load_model(model_path):
     model.eval()
     return model
 
-MODEL_PATH = "models/model.pt"
-MODEL = load_model(MODEL_PATH)
+model_path = "../models/model.pt"
+try:
+    model = load_model(model_path)
+except Exception as e:
+    raise RuntimeError(f"Error loading the model: {e}")
 
-class InputData(BaseModel):
-    feature1: float
-    feature2: float
+def process_image(image: Image.Image) -> torch.Tensor:
+    transform = transforms.Compose([
+        transforms.Grayscale(num_output_channels=1),
+        transforms.Resize((86, 86)),
+    ])
 
-class OutputData(BaseModel):
-    prediction: str
+    image = transform(image)
+    image_array = np.array(image)
+    image_tensor = torch.tensor(image_array, dtype=torch.float32)
+    image_tensor = image_tensor.unsqueeze(0).unsqueeze(0)
+    return image_tensor
 
-@app.post("/predict", response_model=OutputData)
-async def predict(data: InputData):
+@app.post("/classify")
+async def classify_image(file: UploadFile = File(...)):
     try:
+        if not file.content_type or file.content_type.split("/")[0] != "image":
+            raise HTTPException(status_code=400, detail="Invalid file type. Only images are supported.")
 
-        input_features = [data.feature1, data.feature2]
+        contents = await file.read()
+        image = Image.open(io.BytesIO(contents))
+        processed_image = process_image(image)
+        output = model(processed_image)
+        _, predicted = torch.max(output.data, 1)
 
-        with torch.no_grad():
-            input_tensor = torch.tensor(input_features, dtype=torch.float32).view(1, -1)
-            output = MODEL(input_tensor)
+        # Map the predicted class index to the corresponding label
+        predicted_label = CLASS_LABELS[predicted.item()]
 
-        predicted_class = torch.argmax(output).item()
-
-        class_mapping = {0: "Class 0", 1: "Class 1", 2: "Class 2", 3: "Class 3"}
-        prediction_result = class_mapping[predicted_class]
-
-        return {"prediction": prediction_result}
+        return JSONResponse(content={"class": predicted_label}, status_code=200)
     except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail=f"An error occurred during prediction: {str(e)}"
-        )
-
-@app.post("/predict_image", response_model=OutputData)
-async def predict_image(file: UploadFile = File(...)):
-    try:
-
-        with open("uploaded_image.jpg", "wb") as f:
-            f.write(file.file.read())
+        return JSONResponse(content={"error": str(e)}, status_code=500)
 
 
-        prediction_result = "Class 0"
-
-        return {"prediction": prediction_result}
-    except Exception as e:
-        raise HTTPException(
-            status_code=500,
-            detail=f"An error occurred during image prediction: {str(e)}"
-        )
-
-# Root endpoint
-@app.get("/")
-async def read_root():
-    return {"Hello": "World"}
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
