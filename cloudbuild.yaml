@@ -1,5 +1,5 @@
 steps:
     - name: 'gcr.io/cloud-builders/docker'
-        args: ['build', '-t', 'gcr.io/<dtumlops-410818>/group34_project', '.']
+        args: ['build', '-t', 'gcr.io/dtumlops-410818/group34_project', '.']
     - name: 'gcr.io/cloud-builders/docker'
-        args: ['push', 'gcr.io/<dtumlops-410818>/group34_project']
+        args: ['push', 'gcr.io/dtumlops-410818/group34_project']
