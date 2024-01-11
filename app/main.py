@@ -44,7 +44,7 @@ def load_model(model_path):
     model.eval()
     return model
 
-model_path = "../models/model.pt"
+model_path = os.path.abspath('models/model.pt')
 try:
     model = load_model(model_path)
 except Exception as e:
