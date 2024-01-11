@@ -10,6 +10,7 @@ from sklearn.model_selection import KFold
 from omegaconf import OmegaConf
 import hydra
 import wandb
+from typing import Any, Dict, List, Tuple
 from pytorch_lightning.loggers import WandbLogger
 from torch.profiler import profile, tensorboard_trace_handler, ProfilerActivity
 
@@ -23,28 +24,32 @@ log = logging.getLogger(__name__)
 torch.set_float32_matmul_precision('medium')
 
 # Setting dataloader worker seed
-def seed_worker(worker_id):
+def seed_worker(worker_id: int) -> None:
+    """Set the seed for dataloader workers."""
     worker_seed = torch.initial_seed() % 2 ** 32
 
 class LightningModel(pl.LightningModule):
-    def __init__(self, hparams):
+    def __init__(self, hparams: Dict[str, Any]) -> None:
         super().__init__()
         self.save_hyperparameters(hparams)
         self.model = timm_model()
         self.criterion = torch.nn.CrossEntropyLoss()
-        self.validation_outputs = []
+        self.validation_outputs: List[float] = []
 
-    def forward(self, x):
+    def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """Forward pass of the model."""
         return self.model(x)
 
-    def training_step(self, batch, batch_idx):
+    def training_step(self, batch: Tuple[torch.Tensor, torch.Tensor], batch_idx: int) -> torch.Tensor:
+        """Training step."""
         images, labels = batch
         outputs = self(images)
         loss = self.criterion(outputs, labels)
         self.log('train_loss', loss)
         return loss
 
-    def validation_step(self, batch, batch_idx):
+    def validation_step(self, batch: Tuple[torch.Tensor, torch.Tensor], batch_idx: int) -> Dict[str, torch.Tensor]:
+        """Validation step."""
         images, labels = batch
         outputs = self(images)
         loss = self.criterion(outputs, labels)
@@ -56,7 +61,8 @@ class LightningModel(pl.LightningModule):
         self.log('val_accuracy', accuracy, on_step=True, on_epoch=True, prog_bar=True)
         return {'val_loss': loss, 'val_accuracy': accuracy}
 
-    def test_step(self, batch, batch_idx):
+    def test_step(self, batch: Tuple[torch.Tensor, torch.Tensor], batch_idx: int) -> Dict[str, torch.Tensor]:
+        """Test step."""
         images, labels = batch
         outputs = self(images)
         loss = self.criterion(outputs, labels)
@@ -67,32 +73,37 @@ class LightningModel(pl.LightningModule):
         self.log('test_accuracy', accuracy, on_step=True, on_epoch=True, prog_bar=True)
         return {'test_loss': loss, 'test_accuracy': accuracy}
 
-    def on_validation_epoch_end(self):
+    def on_validation_epoch_end(self) -> None:
+        """Called at the end of each validation epoch."""
         avg_val_accuracy = torch.tensor(self.validation_outputs).mean()
         self.log('avg_val_accuracy', avg_val_accuracy, prog_bar=True)
         self.validation_outputs = []
 
-    def configure_optimizers(self):
+    def configure_optimizers(self) -> torch.optim.Optimizer:
+        """Configure optimizer."""
         return torch.optim.Adam(self.model.parameters(), lr=self.hparams.lr)
 
-    def train_dataloader(self):
+    def train_dataloader(self) -> DataLoader:
+        """Train dataloader."""
         train_dataset, _ = dataloader()
         return DataLoader(train_dataset, batch_size=self.hparams.batch_size, shuffle=True, worker_init_fn=seed_worker)
 
-    def val_dataloader(self):
+    def val_dataloader(self) -> DataLoader:
+        """Validation dataloader."""
         print("val_dataloader")
         _, val_dataset = dataloader()
         return DataLoader(val_dataset, batch_size=self.hparams.batch_size, shuffle=False, worker_init_fn=seed_worker)
 
-    def test_dataloader(self):
+    def test_dataloader(self) -> DataLoader:
+        """Test dataloader."""
         print("test_dataloader")
         _, test_dataset = dataloader()
         return DataLoader(test_dataset, batch_size=self.hparams.batch_size, shuffle=False, worker_init_fn=seed_worker)
 
 
-
 @hydra.main(config_path="config", config_name="config.yaml", version_base=None)
 def train_evaluate(config: OmegaConf) -> None:
+    """Main function for training and evaluation."""
     hparams = OmegaConf.to_container(config, resolve=True)
     run = wandb.init(project="MLOps_project", config=hparams)
     wandb_logger = WandbLogger()
