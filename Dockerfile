@@ -1,11 +1,14 @@
-# api.dockerfile
-FROM python:3.9
+FROM python:3.9-slim
+RUN apt update && \
+    apt install --no-install-recommends -y build-essential gcc && \
+    apt clean && rm -rf /var/lib/apt/lists/*
 
-COPY ./requirements.txt /code/requirements.txt
+COPY requirements.txt requirements.txt
+COPY pyproject.toml pyproject.toml
+COPY src/ src/
+COPY data/proces/ data/proces/
 
-RUN pip install --no-cache-dir python-multipart
-RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
-COPY ./app /code/app
-COPY ./models /code/models
-WORKDIR /code
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "80"]
+WORKDIR /
+RUN pip install -r requirements.txt --no-cache-dir
+
+ENTRYPOINT ["python", "-u", "src/models/train_model.py"]
