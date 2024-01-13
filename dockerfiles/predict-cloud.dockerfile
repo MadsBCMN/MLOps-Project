@@ -13,15 +13,15 @@ COPY requirements.txt requirements.txt
 
 # Install dependencies
 WORKDIR /
-# RUN pip install -r requirements.txt --no-cache-dir
-RUN --mount=type=cache,target=~/pip/.cache pip install -r requirements.txt --no-cache-dir
+RUN pip install -r requirements.txt --no-cache-dir
+# RUN --mount=type=cache,target=~/pip/.cache pip install -r requirements.txt --no-cache-dir
 
 # Get repo
-RUN git clone https://github.com/MadsBCMN/MLOps-Project.git
-WORKDIR MLOps-Project/
+# RUN git clone https://github.com/MadsBCMN/MLOps-Project.git
+# WORKDIR MLOps-Project/
 
 # Get data and unpack
-RUN python src/data/unpack_data.py
+# RUN python src/data/unpack_data.py
 
 # Set the entry point for prediction script
 ENTRYPOINT ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
