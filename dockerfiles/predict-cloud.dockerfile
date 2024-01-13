@@ -24,4 +24,4 @@ RUN pip install -r requirements.txt --no-cache-dir
 # RUN python src/data/unpack_data.py
 
 # Set the entry point for prediction script
-# ENTRYPOINT ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
+ENTRYPOINT ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
