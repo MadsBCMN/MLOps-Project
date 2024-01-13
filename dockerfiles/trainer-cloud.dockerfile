@@ -23,6 +23,6 @@ WORKDIR MLOps-Project/
 # Get data and unpack
 # RUN python src/data/unpack_data.py
 # RUN gsutil cp gs://dtumlops_data_bucket/data/processed/* data/processed/
-RUN dvc pull data/processed/
+RUN dvc pull data/processed/ -vv
 
 CMD ["python", "-u", "src/train_model_lightning.py"]
