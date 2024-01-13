@@ -13,3 +13,5 @@ steps:
   args: ['build', '-f', 'dockerfiles/predict-cloud.dockerfile', '-t', 'gcr.io/dtumlops-410818/predict:latest', '--cache-from', 'gcr.io/dtumlops-410818/predict:latest', '.']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/dtumlops-410818/predict']
+options:
+ machineType: 'E2_HIGHCPU_8'
