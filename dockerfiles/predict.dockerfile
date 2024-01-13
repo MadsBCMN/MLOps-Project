@@ -18,7 +18,7 @@ RUN pip install -r requirements.txt --no-cache-dir
 
 # Get repo
 # RUN git clone https://github.com/MadsBCMN/MLOps-Project.git
-WORKDIR MLOps-Project/
+# WORKDIR MLOps-Project/
 
 # Get data and unpack
 RUN python src/data/unpack_data.py
