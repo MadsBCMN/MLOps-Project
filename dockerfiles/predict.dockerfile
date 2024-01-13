@@ -1,19 +1,27 @@
-FROM python:3.9-slim
+FROM python:3.11.7-slim-bookworm
 
 # Install essentials
 RUN apt update && \
-    apt install --no-install-recommends -y build-essential gcc && \
+    apt install --no-install-recommends -y build-essential gcc git && \
     apt clean && rm -rf /var/lib/apt/lists/*
 
 # Copy necessary files from your computer to the container
 COPY requirements.txt requirements.txt
-COPY pyproject.toml pyproject.toml
-COPY src/ src/
-COPY data/proces/ data/proces/
+# COPY pyproject.toml pyproject.toml
+# COPY src/ src/
+# COPY data/processed/ data/processed/
 
 # Install dependencies
 WORKDIR /
-RUN pip install -r requirements.txt --no-cache-dir
+# RUN pip install -r requirements.txt --no-cache-dir
+RUN --mount=type=cache,target=~/pip/.cache pip install -r requirements.txt --no-cache-dir
+
+# Get repo
+RUN git clone https://github.com/MadsBCMN/MLOps-Project.git
+WORKDIR MLOps-Project/
+
+# Get data and unpack
+RUN python src/data/unpack_data.py
 
 # Set the entry point for prediction script
-ENTRYPOINT ["python", "-u", "<project_name>/models/predict_model.py"]
+ENTRYPOINT ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]
