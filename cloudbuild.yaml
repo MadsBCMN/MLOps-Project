@@ -1,5 +1,19 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/dtumlops-410818/group34', '.']
+  entrypoint: 'bash'
+  args: ['-c', 'docker pull gcr.io/dtumlops-410818/training:latest || exit 0']
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/dtumlops-410818/group34']
+  args: ['build', '-f', 'dockerfiles/trainer-cloud.dockerfile', '-t', 'gcr.io/dtumlops-410818/training:latest', '--cache-from', 'gcr.io/dtumlops-410818/training:latest', '.']
+  options:
+    machineType: 'N2_HIGHCPU_8'
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/dtumlops-410818/training']
+- name: 'gcr.io/cloud-builders/docker'
+  entrypoint: 'bash'
+  args: ['-c', 'docker pull gcr.io/dtumlops-410818/predict:latest || exit 0']
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-f', 'dockerfiles/predict-cloud.dockerfile', '-t', 'gcr.io/dtumlops-410818/predict:latest', '--cache-from', 'gcr.io/dtumlops-410818/predict:latest', '.']
+  options:
+  machineType: 'N2_HIGHCPU_8'
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/dtumlops-410818/predict']
