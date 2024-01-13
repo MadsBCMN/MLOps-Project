@@ -21,6 +21,8 @@ RUN git clone https://github.com/MadsBCMN/MLOps-Project.git
 WORKDIR MLOps-Project/
 
 # Get data and unpack
-RUN python src/data/unpack_data.py
+# RUN python src/data/unpack_data.py
+RUN gsutil cp gs://dtumlops_data_bucket/data/processed/* data/processed/
+
 
 CMD ["python", "-u", "src/train_model_lightning.py"]
