@@ -13,8 +13,8 @@ COPY requirements.txt requirements.txt
 
 # Install dependencies
 WORKDIR /
-# RUN pip install -r requirements.txt --no-cache-dir
-RUN --mount=type=cache,target=~/pip/.cache pip install -r requirements.txt --no-cache-dir
+RUN pip install -r requirements.txt --no-cache-dir
+# RUN --mount=type=cache,target=~/pip/.cache pip install -r requirements.txt --no-cache-dir
 
 # Get repo
 RUN git clone https://github.com/MadsBCMN/MLOps-Project.git
