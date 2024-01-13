@@ -23,4 +23,4 @@ WORKDIR MLOps-Project/
 # Get data and unpack
 # RUN python src/data/unpack_data.py
 
-# ENTRYPOINT ["python", "-u", "src/train_model_lightning.py"]
+CMD ["python", "-u", "src/train_model_lightning.py"]
