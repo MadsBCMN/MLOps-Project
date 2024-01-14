@@ -313,7 +313,9 @@ end of the project.
 >
 > Answer:
 
---- question 14 fill here ---
+---
+<img src="reports/figures/sweep_table.png" alt="Sweep table sorted asc on mean_val_accuracy">
+---
 
 ### Question 15
 
