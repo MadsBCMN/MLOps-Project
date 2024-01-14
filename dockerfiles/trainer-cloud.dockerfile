@@ -26,4 +26,4 @@ WORKDIR MLOps-Project/
 # RUN dvc pull -vv
 # RUN mkdir data/processed/
 
-CMD ["python", "-u", "src/train_model_lightning.py"]
+ENTRYPOINT ["python", "-u", "src/train_model_lightning.py"]
