@@ -314,8 +314,12 @@ end of the project.
 > Answer:
 
 ---
-![Sweep table sorted asc on mean_val_accuracy](figures/sweep_table.png)
+We utilized Weights & Biases (W&B) to monitor and visualize key metrics for our experiments to enhance our model performance. Here are three screenshots showcasing different aspects of our experiments:
 
+![Sweep table sorted asc on mean_val_accuracy](figures/sweep_table.png)
+![Sweep](figures/dashboard.png)
+![Sweep ](figures/jelly47.png)
+In the first screenshot, we see the table of the sweep table runs sorted according to mean_val_accuracy. The second image shows a dashboard of all the performance. The last image shows the performance of the metrics we are currently using in our model.
 ---
 
 ### Question 15
@@ -331,7 +335,16 @@ end of the project.
 >
 > Answer:
 
---- question 15 fill here ---
+--- For our project, Docker played a role in creating containerized applications for various stages of our workflow. We developed several Docker images to encapsulate different components of our pipeline, including training, inference, and deployment. For example, for the training, this ensures that the training process is consistent and reproducible across different environments. To build our docker image for our API, we used:
+
+docker build -t my_app.
+
+And to build the container, we used:
+
+docker run --name appcontainer -p 80:80 my_app
+
+Here is the link to one of our Dockerfiles:
+[Dockerfile](https://github.com/MadsBCMN/MLOps-Project/blob/main/dockerfiles/predict-cloud.dockerfile) ---
 
 ### Question 16
 
@@ -346,7 +359,7 @@ end of the project.
 >
 > Answer:
 
---- question 16 fill here ---
+---   ---
 
 ## Working in the cloud
 
