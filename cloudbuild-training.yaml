@@ -5,6 +5,6 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-f', 'dockerfiles/trainer-cloud.dockerfile', '-t', 'gcr.io/dtumlops-410818/training:latest', '--cache-from', 'gcr.io/dtumlops-410818/training:latest', '.']
 - name: gcr.io/cloud-builders/gsutil
-  args: ['cp', '-r', '-v', "gs://dtumlops_data_bucket/data/processed/", "MLOps-Project/data/", '--network=cloudbuild']
+  args: ['cp', '-r', '-v', "gs://dtumlops_data_bucket/data/processed/", "/workspace/MLOps-Project/data/", '--network=cloudbuild']
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/dtumlops-410818/training']
