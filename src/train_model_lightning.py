@@ -106,6 +106,13 @@ class LightningModel(pl.LightningModule):
 def train_evaluate(config: OmegaConf) -> None:
     """Main function for training and evaluation."""
     hparams = OmegaConf.to_container(config, resolve=True)
+
+    try:
+        os.environ["WANDB_API_KEY"] = hparams["wandb_api_key"]
+        log.info("WANDB_API_KEY registered")
+    except:
+        log.info("WANDB_API_KEY not found, using local wandb login")
+
     run = wandb.init(project="MLOps_project", config=hparams)
     wandb_logger = WandbLogger()
 
