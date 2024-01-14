@@ -9,7 +9,7 @@ steps:
   args:
   - '-c'
   - |
-    gsutil -m cp -r gs://dtumlops_data_bucket/data/processed/ data/ --network=cloudbuild
+    gsutil cp -r -v gs://dtumlops_data_bucket/data/processed/ data/
   # args: ['cp', '-r', '-v', "gs://dtumlops_data_bucket/data/processed/", "/workspace/MLOps-Project/data/", '--network=cloudbuild'] gsutil -m cp -r 'gs://bucket/*/' '/workspace'
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/dtumlops-410818/training']
