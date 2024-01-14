@@ -5,6 +5,7 @@ seed: 42
 n_workers: 4
 k_fold: False
 profile: False
+gcs: True
 hydra:
   job:
     chdir: False
