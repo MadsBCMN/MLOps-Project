@@ -14,14 +14,21 @@ from typing import Any, Dict, List, Tuple
 from pytorch_lightning.loggers import WandbLogger
 from torch.profiler import profile, tensorboard_trace_handler, ProfilerActivity
 from google.cloud import storage
-from data.unpack_data import unpack_raw_data
+import zipfile
+
 
 # Set the working directory to project root
 os.chdir(os.path.dirname(sys.path[0]))
 sys.path.append(os.path.normcase(os.getcwd()))
 
 # Pull and unpack data
-unpack_raw_data()
+os.system('dvc pull')
+# Unzip the raw data
+# with zipfile.ZipFile("data/raw/Training.zip", 'r') as zip_ref:
+#     zip_ref.extractall("data/raw/")
+#
+# with zipfile.ZipFile("data/raw/Testing.zip", 'r') as zip_ref:
+#     zip_ref.extractall("data/raw/")
 
 # setup logging
 log = logging.getLogger(__name__)
