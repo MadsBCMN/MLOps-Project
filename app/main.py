@@ -2,7 +2,7 @@ import io
 import os
 import sys
 sys.path.append(os.path.normcase(os.getcwd()))
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, BackgroundTasks
 from fastapi.responses import JSONResponse
 import torch
 import numpy as np
@@ -12,6 +12,9 @@ import torch
 import torch.nn as nn
 import timm
 from fastapi import HTTPException
+import csv
+import datetime
+import json
 
 ### MODEL ####
 # Global variables
@@ -32,7 +35,7 @@ def timm_model() -> nn.Module:
     model.fc = nn.Linear(model.fc.in_features, NUM_CLASSES)
 
     return model
-#####################
+####################
 
 app = FastAPI()
 CLASS_LABELS = ['glioma', 'meningioma', 'no_tumor', 'pituitary']
@@ -64,7 +67,7 @@ def process_image(image: Image.Image) -> torch.Tensor:
 
 #hej
 @app.post("/classify")
-async def classify_image(file: UploadFile = File(...)):
+async def classify_image(background_tasks: BackgroundTasks, file: UploadFile = File(...)):
     try:
         if not file.content_type or file.content_type.split("/")[0] != "image":
             raise HTTPException(status_code=400, detail="Invalid file type. Only images are supported.")
@@ -78,7 +81,12 @@ async def classify_image(file: UploadFile = File(...)):
         # Map the predicted class index to the corresponding label
         predicted_label = CLASS_LABELS[predicted.item()]
 
-        return JSONResponse(content={"class": predicted_label}, status_code=200)
+        image_array = np.array(processed_image.reshape(-1))
+        timestamp = datetime.datetime.now().isoformat()
+        background_tasks.add_task(save_to_csv, image_array, predicted_label, timestamp)
+
+
+        return JSONResponse(content={"class" : predicted_label, "class_label" : predicted.item()}, status_code=200)
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
 
