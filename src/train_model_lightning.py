@@ -13,6 +13,8 @@ import wandb
 from typing import Any, Dict, List, Tuple
 from pytorch_lightning.loggers import WandbLogger
 from torch.profiler import profile, tensorboard_trace_handler, ProfilerActivity
+from google.cloud import storage
+
 
 # Set the working directory to project root
 os.chdir(os.path.dirname(sys.path[0]))
@@ -182,7 +184,14 @@ def train_evaluate(config: OmegaConf) -> None:
     # Save the final model
     torch.save(model.state_dict(), 'models/model.pt')
     run.log_model(path='models/model.pt', name="resnet18")
-    log.info("Model saved")
+    log.info("Model saved locally")
+
+    if hparams["gcs"]:
+        storage_client = storage.Client()
+        bucket = storage_client.bucket("mri-model")
+        blob = bucket.blob("models/model.pt")
+        blob.upload_from_filename("models/model.pt")
+        log.info("Model saved to gcs")
 
 
     # Finish wandb run
