@@ -14,11 +14,14 @@ from typing import Any, Dict, List, Tuple
 from pytorch_lightning.loggers import WandbLogger
 from torch.profiler import profile, tensorboard_trace_handler, ProfilerActivity
 from google.cloud import storage
-
+from data.unpack_data import unpack_raw_data
 
 # Set the working directory to project root
 os.chdir(os.path.dirname(sys.path[0]))
 sys.path.append(os.path.normcase(os.getcwd()))
+
+# Pull and unpack data
+unpack_raw_data()
 
 # setup logging
 log = logging.getLogger(__name__)
