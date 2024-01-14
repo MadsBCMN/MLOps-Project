@@ -1,9 +1,9 @@
 steps:
+# - name: 'gcr.io/cloud-builders/docker'
+#   entrypoint: 'bash'
+#   args: ['-c', 'docker pull gcr.io/dtumlops-410818/training:latest || exit 0']      '--cache-from', 'gcr.io/dtumlops-410818/training:latest', 
 - name: 'gcr.io/cloud-builders/docker'
-  entrypoint: 'bash'
-  args: ['-c', 'docker pull gcr.io/dtumlops-410818/training:latest || exit 0']
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-f', 'dockerfiles/trainer-cloud.dockerfile', '-t', 'gcr.io/dtumlops-410818/training:latest', '--cache-from', 'gcr.io/dtumlops-410818/training:latest', '.']
+  args: ['build', '-f', 'dockerfiles/trainer-cloud.dockerfile', '-t', 'gcr.io/dtumlops-410818/training:latest', '.']
 - name: gcr.io/cloud-builders/gsutil
   entrypoint: 'bash'
   args:
