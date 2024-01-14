@@ -22,7 +22,7 @@ os.chdir(os.path.dirname(sys.path[0]))
 sys.path.append(os.path.normcase(os.getcwd()))
 
 # Pull and unpack data
-os.system('dvc pull')
+os.system('dvc pull data/processed')
 # Unzip the raw data
 # with zipfile.ZipFile("data/raw/Training.zip", 'r') as zip_ref:
 #     zip_ref.extractall("data/raw/")
