@@ -314,7 +314,8 @@ end of the project.
 > Answer:
 
 ---
-<img src="reports/figures/sweep_table.png" alt="Sweep table sorted asc on mean_val_accuracy">
+![Sweep table sorted asc on mean_val_accuracy](figures/sweep_table.png)
+
 ---
 
 ### Question 15
