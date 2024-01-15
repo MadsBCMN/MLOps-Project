@@ -3,8 +3,8 @@ from requests_toolbelt.multipart.encoder import MultipartEncoder
 import streamlit as st
 
 # interact with FastAPI endpoint
+# backend = "http://localhost:8000/classify"
 backend = "https://predict-3aoiym5c7a-lz.a.run.app/classify"
-
 
 def process(image, server_url: str):
     m = MultipartEncoder(fields={"file": ("filename", image, "image/jpeg")})
