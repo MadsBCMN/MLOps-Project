@@ -16,3 +16,5 @@ uvicorn >=0.15.0,<0.16.0
 google-api-python-client >= 2.113.0
 python-multipart >= 0.0.6
 google-cloud-storage>=2.14.0
+transformers >= 4.36.2
+prometheus-fastapi-instrumentator >= 6.1.0

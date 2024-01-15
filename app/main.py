@@ -2,7 +2,7 @@ import io
 import os
 import sys
 sys.path.append(os.path.normcase(os.getcwd()))
-from fastapi import FastAPI, UploadFile, File, BackgroundTasks
+from fastapi import FastAPI, UploadFile, File
 from fastapi.responses import JSONResponse
 import torch
 import numpy as np
@@ -12,8 +12,9 @@ import torch
 import torch.nn as nn
 import timm
 from fastapi import HTTPException
-import datetime
-
+from prometheus_fastapi_instrumentator import Instrumentator
+from prometheus_client import Counter
+sys.path.append(os.path.normcase(os.getcwd()))
 
 ### MODEL ####
 # Global variables
@@ -35,6 +36,8 @@ def timm_model() -> nn.Module:
 
     return model
 ####################
+# Create a counter metric to track image classification requests
+image_classification_requests = Counter('image_classification_requests_total', 'Total number of image classification requests')
 
 app = FastAPI()
 CLASS_LABELS = ['glioma', 'meningioma', 'no_tumor', 'pituitary']
@@ -46,7 +49,7 @@ def load_model(model_path):
     model.eval()
     return model
 
-model_path = os.path.abspath('models/model.pt')
+model_path = os.path.abspath('../models/model.pt')
 try:
     model = load_model(model_path)
 except Exception as e:
@@ -64,10 +67,12 @@ def process_image(image: Image.Image) -> torch.Tensor:
     image_tensor = image_tensor.unsqueeze(0).unsqueeze(0)
     return image_tensor
 
-#hej
 @app.post("/classify")
 async def classify_image(file: UploadFile = File(...)):
     try:
+        # Increment the image_classification_requests counter
+        image_classification_requests.inc()
+
         if not file.content_type or file.content_type.split("/")[0] != "image":
             raise HTTPException(status_code=400, detail="Invalid file type. Only images are supported.")
 
@@ -80,10 +85,12 @@ async def classify_image(file: UploadFile = File(...)):
         # Map the predicted class index to the corresponding label
         predicted_label = CLASS_LABELS[predicted.item()]
 
-        return JSONResponse(content={"class" : predicted_label, "class_label" : predicted.item()}, status_code=200)
+        return JSONResponse(content={"class": predicted_label, "class_label": predicted.item()}, status_code=200)
     except Exception as e:
         return JSONResponse(content={"error": str(e)}, status_code=500)
 
+# Instrument the FastAPI application
+Instrumentator().instrument(app).expose(app)
 
 if __name__ == "__main__":
     import uvicorn
