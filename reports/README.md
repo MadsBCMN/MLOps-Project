@@ -163,9 +163,8 @@ end of the project.
 > *experiments.*
 > Answer:
 
---- From the cookiecutter template, we filled  The "src" folder contains the main source code, including data handling, model implementation, visualization, an training and prediction script. We used the folders "data," "models," and "output" to store the data and output from the source code. We utilized the "config" folder for managing configurations with Hydra, making hyperparameter tuning and configuration adjustments. The "tests" folder includes unit tests for data and model components.
-
-*** NOTE REVISIT *** ---
+--- From the cookiecutter template, we filled  The "src" folder contains the main source code, including data handling, model implementation, visualization, an training and prediction script. We used the folders "data," "models," and "output" to store the data and output from the source code. We utilized the "config" folder for managing configurations with Hydra, making hyperparameter tuning and configuration adjustments. The "tests" folder includes unit tests of the data and model components. We did not fill out the notebooks folder, and we created three new folders wandb, dockerfiles and app. wandb contains log files for runs of weights and bias, dockerfiles contains all our docker files in one place, and app contains our main.py script for our application.
+ ---
 
 ### Question 6
 
@@ -262,7 +261,7 @@ end of the project.
 > Answer:
 
 --- We have implemented a continuous integration (CI) workflow using GitHub Actions. In our continuous integration setup, we've structured the CI pipeline into a single workflow named "Run tests." This workflow automatically runs unit tests whenever a change is pushed to the repository. It also ensures the project builds and runs correctly on multiple operating systems and Python versions. The dependencies, including project dependencies and test requirements specified in requirements.txt and requirements_tests.txt, are cached for faster subsequent runs using GitHub Actions' caching mechanism. The DVC cache is also cached separately, enhancing the efficiency of data retrieval during testing. The CI workflow includes testing with pytest to validate the code's functionality. This ensures that unit tests are executed, providing feedback on the correctness of the codebase.
-*** NOTE REVISIT *** ---
+ ---
 
 ## Running code and tracking experiments
 
@@ -281,7 +280,7 @@ end of the project.
 >
 > Answer:
 
---- Yes, we ensured reconfigurability and reproducibility by employing config files for experiments. We utilized multiple configuration files to test different variables and scenarios (see exp1.yaml and exp2.yaml). we also used argparser to do quick tests along the way, looking like this: python your_script.py --lr 0.0005 --batch_size 40 --n_epochs 20 --seed 42 --k_fold --profile. Finally, we did a parameter sweep approach to systematically explore various hyperparameter combinations and find the most optimal hyperparameter. However, we discovered that the parameters from this test overfitted the model, and therefore, we didn't get a very good prediction, so we ended up  ---
+--- Yes, we ensured reconfigurability and reproducibility by employing config files for experiments. We utilized multiple configuration files to test different variables and scenarios (see exp1.yaml and exp2.yaml). we also used argparser to do quick tests along the way, looking like this: python your_script.py --lr 0.0005 --batch_size 40 --n_epochs 20 --seed 42 --k_fold --profile. Finally, we did a parameter sweep approach to systematically explore various hyperparameter combinations and find the most optimal hyperparameter. We tested 12 images with our prediction application and with the hyperparameters found with sweep and all 12 images were classified correctly.  ---
 
 ### Question 13
 
@@ -296,7 +295,7 @@ end of the project.
 >
 > Answer:
 
---- To ensure reproducibility, we used the logging module to log configuration parameters, such as learning rate, batch size, number of epochs, seed, k-fold, and profiling, which are logged at different steps in the script. An overview of the experimental setup is saved, and this way, we could always go back and reproduce an experiment by going to the log file src/outputs/, which provides an overview of the configuration and details of the training and evaluation phases. ---
+--- To ensure reproducibility, we used the logging module to log configuration parameters, such as learning rate, batch size, number of epochs and seed which are logged at different steps in the script. An overview of the experimental setup is saved, and this way, we could always go back and reproduce an experiment by going to the log file src/outputs/, which provides an overview of the configuration and details of the training and evaluation phases. ---
 
 ### Question 14
 
