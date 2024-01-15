@@ -99,19 +99,19 @@ class LightningModel(pl.LightningModule):
     def train_dataloader(self) -> DataLoader:
         """Train dataloader."""
         train_dataset, _ = dataloader()
-        return DataLoader(train_dataset, batch_size=self.hparams.batch_size, shuffle=True, worker_init_fn=seed_worker)
+        return DataLoader(train_dataset, batch_size=self.hparams.batch_size, shuffle=True, worker_init_fn=seed_worker, num_workers=self.hparams["n_workers"])
 
     def val_dataloader(self) -> DataLoader:
         """Validation dataloader."""
         print("val_dataloader")
         _, val_dataset = dataloader()
-        return DataLoader(val_dataset, batch_size=self.hparams.batch_size, shuffle=False, worker_init_fn=seed_worker)
+        return DataLoader(val_dataset, batch_size=self.hparams.batch_size, shuffle=False, worker_init_fn=seed_worker, num_workers=self.hparams["n_workers"])
 
     def test_dataloader(self) -> DataLoader:
         """Test dataloader."""
         print("test_dataloader")
         _, test_dataset = dataloader()
-        return DataLoader(test_dataset, batch_size=self.hparams.batch_size, shuffle=False, worker_init_fn=seed_worker)
+        return DataLoader(test_dataset, batch_size=self.hparams.batch_size, shuffle=False, worker_init_fn=seed_worker, num_workers=self.hparams["n_workers"])
 
 
 @hydra.main(config_path="config", config_name="config.yaml", version_base=None)
@@ -161,8 +161,8 @@ def train_evaluate(config: OmegaConf) -> None:
             train_subsampler = Subset(train_dataset, train_ids)
             val_subsampler = Subset(train_dataset, val_ids)
 
-            train_loader = DataLoader(train_subsampler, batch_size=config.batch_size, shuffle=True, worker_init_fn=seed_worker)
-            val_loader = DataLoader(val_subsampler, batch_size=config.batch_size, shuffle=False, worker_init_fn=seed_worker)
+            train_loader = DataLoader(train_subsampler, batch_size=config.batch_size, shuffle=True, worker_init_fn=seed_worker, num_workers=config.n_workers)
+            val_loader = DataLoader(val_subsampler, batch_size=config.batch_size, shuffle=False, worker_init_fn=seed_worker, num_workers=config.n_workers)
 
             trainer.fit(model, train_loader, val_loader)
 

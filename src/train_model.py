@@ -110,8 +110,8 @@ def train_evaluate(config: OmegaConf) -> None:
                 val_subsampler = Subset(train_dataset, val_ids)
 
                 # Create data loaders for this fold
-                fold_train_loader = DataLoader(train_subsampler, batch_size=params["batch_size"], shuffle=True, worker_init_fn=seed_worker)
-                fold_val_loader = DataLoader(val_subsampler, batch_size=params["batch_size"], shuffle=False, worker_init_fn=seed_worker)
+                fold_train_loader = DataLoader(train_subsampler, batch_size=params["batch_size"], shuffle=True, worker_init_fn=seed_worker, num_workers=params["n_workers"])
+                fold_val_loader = DataLoader(val_subsampler, batch_size=params["batch_size"], shuffle=False, worker_init_fn=seed_worker, num_workers=params["n_workers"])
 
                 # Initialize a new model each fold
                 model = timm_model()
@@ -202,8 +202,8 @@ def train_evaluate(config: OmegaConf) -> None:
 
     # Load datasets
     train_dataset, test_dataset = dataloader()
-    train_loader = DataLoader(train_dataset, batch_size=hparams["batch_size"], shuffle=True, worker_init_fn=seed_worker)
-    test_loader = DataLoader(test_dataset, batch_size=hparams["batch_size"], shuffle=False, worker_init_fn=seed_worker)
+    train_loader = DataLoader(train_dataset, batch_size=hparams["batch_size"], shuffle=True, worker_init_fn=seed_worker, num_workers=hparams["n_workers"])
+    test_loader = DataLoader(test_dataset, batch_size=hparams["batch_size"], shuffle=False, worker_init_fn=seed_worker, num_workers=hparams["n_workers"])
 
     # Train model
     train_model(train_loader, test_loader, device, params=hparams)
