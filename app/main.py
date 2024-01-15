@@ -12,9 +12,8 @@ import torch
 import torch.nn as nn
 import timm
 from fastapi import HTTPException
-import csv
 import datetime
-import json
+
 
 ### MODEL ####
 # Global variables
@@ -67,7 +66,7 @@ def process_image(image: Image.Image) -> torch.Tensor:
 
 #hej
 @app.post("/classify")
-async def classify_image(background_tasks: BackgroundTasks, file: UploadFile = File(...)):
+async def classify_image(file: UploadFile = File(...)):
     try:
         if not file.content_type or file.content_type.split("/")[0] != "image":
             raise HTTPException(status_code=400, detail="Invalid file type. Only images are supported.")
@@ -80,11 +79,6 @@ async def classify_image(background_tasks: BackgroundTasks, file: UploadFile = F
 
         # Map the predicted class index to the corresponding label
         predicted_label = CLASS_LABELS[predicted.item()]
-
-        image_array = np.array(processed_image.reshape(-1))
-        timestamp = datetime.datetime.now().isoformat()
-        background_tasks.add_task(save_to_csv, image_array, predicted_label, timestamp)
-
 
         return JSONResponse(content={"class" : predicted_label, "class_label" : predicted.item()}, status_code=200)
     except Exception as e:
