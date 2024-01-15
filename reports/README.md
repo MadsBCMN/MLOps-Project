@@ -316,9 +316,9 @@ end of the project.
 We utilized Weights & Biases (W&B) to monitor and visualize key metrics for our experiments to enhance our model performance. Here are three screenshots showcasing different aspects of our experiments:
 
 ![Sweep table sorted asc on mean_val_accuracy](figures/sweep_table.png)
-![Sweep](figures/dashboard.png)
-![Sweep ](figures/jelly47.png)
-In the first screenshot, we see the table of the sweep table runs sorted according to mean_val_accuracy. The second image shows a dashboard of all the performance. The last image shows the performance of the metrics we are currently using in our model.
+![Sweep dashboard with all runs](figures/dashboard.png)
+![Jolly-sweep-47 ](figures/jelly47.png)
+In the first screenshot, we see the table of the sweep table runs sorted according to mean_val_accuracy. The second image shows a dashboard of all the performance, where we can compare all runs, or just selected runs. The last image shows the performance of the metrics we are currently using in our model. Let's take a closer look at the last image. We tracked various metrics during our experiments, including train loss, validation accuracy per epoch, validation accuracy per training step, epoch, and average validation accuracy. Train loss is a metric that indicates how well the model learns during the training process. Monitoring the validation accuracy per epoch helps us understand the overall performance trends across training iterations. Validation accuracy per training step provides a more detailed overview, allowing us to detect potential overfitting or rapid improvements. Epoch and average validation accuracy are crucial metrics to assess the overall effectiveness of our model. A good indicator that these are suitable parameters for our model is if train_loss is the inverse of avg_los_accuracy, as seen for jolly-sweep-47 in the last image.
 ---
 
 ### Question 15
@@ -343,7 +343,9 @@ And to build the container, we used:
 docker run --name appcontainer -p 80:80 my_app
 
 Here is the link to one of our Dockerfiles:
-[Dockerfile](https://github.com/MadsBCMN/MLOps-Project/blob/main/dockerfiles/predict-cloud.dockerfile) ---
+[Dockerfile](https://github.com/MadsBCMN/MLOps-Project/blob/main/dockerfiles/predict-cloud.dockerfile)
+
+***NOTE REVISIT*** ---
 
 ### Question 16
 
@@ -358,7 +360,7 @@ Here is the link to one of our Dockerfiles:
 >
 > Answer:
 
----   ---
+---When we encountered errors during our experiments, we used a combination of debugging methods, both traditional debugging techniques with print statements and step-by-step inspection of the code to identify issues, as well as using debugging tools such as profilers. We performed a single profiling run using cProfile on our main code to understand the runtime behavior of different features and methods. We used it to answer questions about the performance of our code, such as how often each method was called and how much time each method spent.---
 
 ## Working in the cloud
 
@@ -375,7 +377,10 @@ Here is the link to one of our Dockerfiles:
 >
 > Answer:
 
---- question 17 fill here ---
+--- We used GCP Bucket for data storage and integrated it with our data version control system. It facilitates efficient data management. We created a trigger workflow in Cloud Build to build Docker images automatically. This automates the process, streamlines the deployment pipeline, and ensures consistency and reliability. Additionally, we deployed our FastAPI application for model inference using either Cloud Functions, which enables us to scale our API based on demand and ensure optimal performance.
+Monitoring?
+Vertex Ai?
+**NOTE REVISIT** ---
 
 ### Question 18
 
@@ -399,7 +404,7 @@ Here is the link to one of our Dockerfiles:
 >
 > Answer:
 
---- question 19 fill here ---
+--- ![GCP Bucket](figures/data.png) ---
 
 ### Question 20
 
@@ -408,7 +413,7 @@ Here is the link to one of our Dockerfiles:
 >
 > Answer:
 
---- question 20 fill here ---
+--- ![GCP Images](figures/images.png)  ---
 
 ### Question 21
 
@@ -417,7 +422,8 @@ Here is the link to one of our Dockerfiles:
 >
 > Answer:
 
---- question 21 fill here ---
+--- ![GCP Triggers](figures/trigger.png)
+![GCP trigger history](figures/history.png)  ---
 
 ### Question 22
 
