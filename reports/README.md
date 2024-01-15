@@ -163,8 +163,7 @@ end of the project.
 > *experiments.*
 > Answer:
 
---- From the cookiecutter template, we filled  The "src" folder contains the main source code, including data handling, model implementation, visualization, an training and prediction script. We used the folders "data," "models," and "output" to store the data and output from the source code. We utilized the "config" folder for managing configurations with Hydra, making hyperparameter tuning and configuration adjustments. The "tests" folder includes unit tests of the data and model components. We did not fill out the notebooks folder, and we created three new folders wandb, dockerfiles and app. wandb contains log files for runs of weights and bias, dockerfiles contains all our docker files in one place, and app contains our main.py script for our application.
- ---
+--- From the cookiecutter template, we filled  The "src" folder contains the main source code, including data handling, model implementation, visualization, an training and prediction script. We used the folders "data," "models," and "output" to store the data and output from the source code. We utilized the "config" folder for managing configurations with Hydra, making hyperparameter tuning and configuration adjustments. The "tests" folder includes unit tests of the data and model components. We did not fill out the notebooks folder, and we created three new folders wandb, dockerfiles and app. wandb contains log files for runs of weights and bias, dockerfiles contains all our docker files in one place, and app contains our main.py script for our application. ---
 
 ### Question 6
 
@@ -260,8 +259,7 @@ end of the project.
 >
 > Answer:
 
---- We have implemented a continuous integration (CI) workflow using GitHub Actions. In our continuous integration setup, we've structured the CI pipeline into a single workflow named "Run tests." This workflow automatically runs unit tests whenever a change is pushed to the repository. It also ensures the project builds and runs correctly on multiple operating systems and Python versions. The dependencies, including project dependencies and test requirements specified in requirements.txt and requirements_tests.txt, are cached for faster subsequent runs using GitHub Actions' caching mechanism. The DVC cache is also cached separately, enhancing the efficiency of data retrieval during testing. The CI workflow includes testing with pytest to validate the code's functionality. This ensures that unit tests are executed, providing feedback on the correctness of the codebase.
- ---
+--- We have implemented a continuous integration (CI) workflow using GitHub Actions. In our continuous integration setup, we've structured the CI pipeline into a single workflow named "Run tests." This workflow automatically runs unit tests whenever a change is pushed to the repository. It also ensures the project builds and runs correctly on multiple operating systems and Python versions. The dependencies, including project dependencies and test requirements specified in requirements.txt and requirements_tests.txt, are cached for faster subsequent runs using GitHub Actions' caching mechanism. The DVC cache is also cached separately, enhancing the efficiency of data retrieval during testing. The CI workflow includes testing with pytest to validate the code's functionality. This ensures that unit tests are executed, providing feedback on the correctness of the codebase. ---
 
 ## Running code and tracking experiments
 
@@ -318,8 +316,7 @@ We utilized Weights & Biases (W&B) to monitor and visualize key metrics for our 
 ![Sweep table sorted asc on mean_val_accuracy](figures/sweep_table.png)
 ![Sweep dashboard with all runs](figures/dashboard.png)
 ![Jolly-sweep-47 ](figures/jelly47.png)
-In the first screenshot, we see the table of the sweep table runs sorted according to mean_val_accuracy. The second image shows a dashboard of all the performance, where we can compare all runs, or just selected runs. The last image shows the performance of the metrics we are currently using in our model. Let's take a closer look at the last image. We tracked various metrics during our experiments, including train loss, validation accuracy per epoch, validation accuracy per training step, epoch, and average validation accuracy. Train loss is a metric that indicates how well the model learns during the training process. Monitoring the validation accuracy per epoch helps us understand the overall performance trends across training iterations. Validation accuracy per training step provides a more detailed overview, allowing us to detect potential overfitting or rapid improvements. Epoch and average validation accuracy are crucial metrics to assess the overall effectiveness of our model. A good indicator that these are suitable parameters for our model is if train_loss is the inverse of avg_los_accuracy, as seen for jolly-sweep-47 in the last image.
----
+In the first screenshot, we see the table of the sweep table runs sorted according to mean_val_accuracy. The second image shows a dashboard of all the performance, where we can compare all runs, or just selected runs. The last image shows the performance of the metrics we are currently using in our model. Let's take a closer look at the last image. We tracked various metrics during our experiments, including train loss, validation accuracy per epoch, validation accuracy per training step, epoch, and average validation accuracy. Train loss is a metric that indicates how well the model learns during the training process. Monitoring the validation accuracy per epoch helps us understand the overall performance trends across training iterations. Validation accuracy per training step provides a more detailed overview, allowing us to detect potential overfitting or rapid improvements. Epoch and average validation accuracy are crucial metrics to assess the overall effectiveness of our model. A good indicator that these are suitable parameters for our model is if train_loss is the inverse of avg_los_accuracy, as seen for jolly-sweep-47 in the last image. ---
 
 ### Question 15
 
@@ -439,7 +436,13 @@ Vertex Ai?
 >
 > Answer:
 
---- question 22 fill here ---
+--- For deployment, we made our image classification model into a FastAPI application. Initially, we tested the deployment locally, ensuring the service was operational on our machines, and then we used Google Cloud Platform (GCP) for deployment.
+Users can make a POST request to the /classify endpoint to invoke the deployed service. For example, using the curl command:
+bashCopy code:
+
+curl -X POST -F "file=@/path/file.jpg" http://127.0.0.1:8000/classify
+
+This command sends an image file (file.jpg) to the deployed FastAPI application for classification. The service then processes the image, predicts its class, and returns the result in JSON format.  ---
 
 ### Question 23
 
