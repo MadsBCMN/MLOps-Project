@@ -10,9 +10,9 @@ outs:
         etag: 08b9e8bb97dde183031001
         version_id: '1705401908130873'
   - relpath: model.pt
-    md5: 43c72b8ea921d123c5b8b9004791f0f4
+    md5: 2ec08f52ad7ff9462adf6150a6a7fbbd
     size: 44761922
     cloud:
       remote_storage:
-        etag: 08c7c5909adde183031001
-        version_id: '1705401913713351'
+        etag: 08a8eae98e98e283031001
+        version_id: '1705417727702312'

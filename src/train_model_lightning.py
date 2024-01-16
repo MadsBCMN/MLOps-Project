@@ -191,6 +191,7 @@ def train_evaluate(config: OmegaConf) -> None:
     log.info("Model saved locally")
 
     # Push new model to dvc
+    os.system('dvc add models')
     os.system('dvc push models')
     log.info("Model pushed to dvc")
 
