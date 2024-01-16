@@ -143,6 +143,9 @@ def train_evaluate(config: OmegaConf) -> None:
 
             # Re-initialize the model for each fold
             model = LightningModel(hparams)
+            # compile model if on linux
+            if sys.platform == "linux" or sys.platform == "linux2":
+                model = torch.compile(model)
 
             trainer = pl.Trainer(
                 logger=wandb_logger,
@@ -173,6 +176,10 @@ def train_evaluate(config: OmegaConf) -> None:
     else:
         # Standard train-test split
         model = LightningModel(hparams)
+        # compile model if on linux
+        if sys.platform == "linux" or sys.platform == "linux2":
+            model = torch.compile(model)
+
         trainer = pl.Trainer(
             logger=wandb_logger,
             max_epochs=config.n_epochs,
@@ -184,6 +191,7 @@ def train_evaluate(config: OmegaConf) -> None:
 
         # Perform test evaluation using the test_dataloader method
         trainer.test(model)
+
 
     # Save the final model
     try:
