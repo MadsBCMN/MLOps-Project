@@ -209,7 +209,7 @@ def train_evaluate(config: OmegaConf) -> None:
 
     if hparams["gcs"]:
         storage_client = storage.Client()
-        bucket = storage_client.bucket("mri-model")
+        bucket = storage_client.bucket("dtumlops_data_bucket")
         blob = bucket.blob("models/model.pt")
         blob.upload_from_filename("models/model.pt")
         log.info("Model saved to gcs")
