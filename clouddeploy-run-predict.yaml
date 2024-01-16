@@ -10,3 +10,7 @@ steps:
   - 'gcr.io/dtumlops-410818/predict:latest'
   - '--region'
   - 'europe-west4'
+  - '--cpu'
+  - '2'
+  - '--memory'
+  - '2Gi'
