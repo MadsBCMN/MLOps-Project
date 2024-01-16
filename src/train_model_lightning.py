@@ -21,17 +21,11 @@ import zipfile
 os.chdir(os.path.dirname(sys.path[0]))
 sys.path.append(os.path.normcase(os.getcwd()))
 
-# Pull and unpack data
-os.system('dvc pull data/processed')
-# Unzip the raw data
-# with zipfile.ZipFile("data/raw/Training.zip", 'r') as zip_ref:
-#     zip_ref.extractall("data/raw/")
-#
-# with zipfile.ZipFile("data/raw/Testing.zip", 'r') as zip_ref:
-#     zip_ref.extractall("data/raw/")
-
 # setup logging
 log = logging.getLogger(__name__)
+
+
+
 
 # Set the default precision
 torch.set_float32_matmul_precision('medium')
@@ -99,19 +93,19 @@ class LightningModel(pl.LightningModule):
     def train_dataloader(self) -> DataLoader:
         """Train dataloader."""
         train_dataset, _ = dataloader()
-        return DataLoader(train_dataset, batch_size=self.hparams.batch_size, shuffle=True, worker_init_fn=seed_worker, num_workers=self.hparams["n_workers"])
+        return DataLoader(train_dataset, batch_size=self.hparams.batch_size, shuffle=True, worker_init_fn=seed_worker, num_workers=self.hparams["n_workers"], persistent_workers=True)
 
     def val_dataloader(self) -> DataLoader:
         """Validation dataloader."""
         print("val_dataloader")
         _, val_dataset = dataloader()
-        return DataLoader(val_dataset, batch_size=self.hparams.batch_size, shuffle=False, worker_init_fn=seed_worker, num_workers=self.hparams["n_workers"])
+        return DataLoader(val_dataset, batch_size=self.hparams.batch_size, shuffle=False, worker_init_fn=seed_worker, num_workers=self.hparams["n_workers"], persistent_workers=True)
 
     def test_dataloader(self) -> DataLoader:
         """Test dataloader."""
         print("test_dataloader")
         _, test_dataset = dataloader()
-        return DataLoader(test_dataset, batch_size=self.hparams.batch_size, shuffle=False, worker_init_fn=seed_worker, num_workers=self.hparams["n_workers"])
+        return DataLoader(test_dataset, batch_size=self.hparams.batch_size, shuffle=False, worker_init_fn=seed_worker, num_workers=self.hparams["n_workers"], persistent_workers=True)
 
 
 @hydra.main(config_path="config", config_name="config.yaml", version_base=None)
@@ -161,8 +155,8 @@ def train_evaluate(config: OmegaConf) -> None:
             train_subsampler = Subset(train_dataset, train_ids)
             val_subsampler = Subset(train_dataset, val_ids)
 
-            train_loader = DataLoader(train_subsampler, batch_size=config.batch_size, shuffle=True, worker_init_fn=seed_worker, num_workers=config.n_workers)
-            val_loader = DataLoader(val_subsampler, batch_size=config.batch_size, shuffle=False, worker_init_fn=seed_worker, num_workers=config.n_workers)
+            train_loader = DataLoader(train_subsampler, batch_size=config.batch_size, shuffle=True, worker_init_fn=seed_worker, num_workers=config.n_workers, persistent_workers=True)
+            val_loader = DataLoader(val_subsampler, batch_size=config.batch_size, shuffle=False, worker_init_fn=seed_worker, num_workers=config.n_workers, persistent_workers=True)
 
             trainer.fit(model, train_loader, val_loader)
 
@@ -196,6 +190,10 @@ def train_evaluate(config: OmegaConf) -> None:
     run.log_model(path='models/model.pt', name="resnet18")
     log.info("Model saved locally")
 
+    # Push new model to dvc
+    os.system('dvc push models')
+    log.info("Model pushed to dvc")
+
     if hparams["gcs"]:
         storage_client = storage.Client()
         bucket = storage_client.bucket("mri-model")
@@ -208,4 +206,15 @@ def train_evaluate(config: OmegaConf) -> None:
     run.finish()
 
 if __name__ == "__main__":
+    # Pull and unpack data, fetch models from dvc
+    os.system('dvc pull data/processed --force')
+    os.system('dvc pull models --force')
+    log.info("Data pulled from dvc")
+    # Unzip the raw data
+    # with zipfile.ZipFile("data/raw/Training.zip", 'r') as zip_ref:
+    #     zip_ref.extractall("data/raw/")
+    #
+    # with zipfile.ZipFile("data/raw/Testing.zip", 'r') as zip_ref:
+    #     zip_ref.extractall("data/raw/")
+
     train_evaluate()
