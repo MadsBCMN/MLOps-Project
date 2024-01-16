@@ -26,9 +26,6 @@ steps:
   entrypoint: gcloud
   args:
   - 'run'
-  - 'deploy'
+  - 'jobs'
+  - 'execute'
   - 'training'
-  - '--image'
-  - 'gcr.io/dtumlops-410818/training:latest'
-  - '--region'
-  - 'europe-north1'
