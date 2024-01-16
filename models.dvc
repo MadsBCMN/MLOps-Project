@@ -3,9 +3,9 @@ outs:
   path: models
   files:
   - relpath: model.pt
-    md5: 54f84ce2d919d91899531c56d0c07f78
+    md5: 2ec08f52ad7ff9462adf6150a6a7fbbd
     size: 44761922
     cloud:
       remote_storage:
-        etag: 0898f3bb84a9e283031001
-        version_id: '1705422269381016'
+        etag: 08b5ffd1d0b4e283031001
+        version_id: '1705425381916597'
