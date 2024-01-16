@@ -178,3 +178,6 @@ cython_debug/
 
 # Profiling results will be handled by dvc
 /profiler
+
+# Models will be handled by dvc
+/models
