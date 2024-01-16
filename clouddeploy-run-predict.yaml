@@ -9,4 +9,4 @@ steps:
   - '--image'
   - 'gcr.io/dtumlops-410818/predict:latest'
   - '--region'
-  - 'europe-north1'
+  - 'europe-west4'
