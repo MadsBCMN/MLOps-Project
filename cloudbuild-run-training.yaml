@@ -30,4 +30,4 @@ steps:
   - 'execute'
   - 'training'
   - '--region'
-  - 'europe-north1'
+  - 'europe-west4-b'
