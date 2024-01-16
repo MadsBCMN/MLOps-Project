@@ -81,6 +81,9 @@ def predict(model: nn.Module, image_folder: str) -> List[int]:
 
 
 if __name__ == '__main__':
+    os.system('dvc pull models --force')
+    # log.info("Data pulled from dvc")
+    
     model_path = "models/model.pt"  # Path to the saved model
     image_folder = "data/example_images"  # Path to the folder with images
 

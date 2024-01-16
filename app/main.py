@@ -94,5 +94,7 @@ async def classify_image(file: UploadFile = File(...)):
 Instrumentator().instrument(app).expose(app)
 
 if __name__ == "__main__":
+    os.system('dvc pull models --force')
+    # log.info("Data pulled from dvc")
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
