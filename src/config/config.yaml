@@ -2,7 +2,7 @@ lr: 0.0006798494015908689
 batch_size: 40
 n_epochs: 20
 seed: 42
-n_workers: 10
+n_workers: 4
 k_fold: False
 profile: False
 gcs: True
