@@ -7,5 +7,5 @@ outs:
     size: 44761922
     cloud:
       remote_storage:
-        etag: 08b5ffd1d0b4e283031001
-        version_id: '1705425381916597'
+        etag: 08ccd19cede6e283031001
+        version_id: '1705438863632588'
