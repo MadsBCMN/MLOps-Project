@@ -14,6 +14,7 @@ import timm
 from fastapi import HTTPException
 from prometheus_fastapi_instrumentator import Instrumentator
 from prometheus_client import Counter
+from google.cloud import storage
 
 sys.path.append(os.path.normcase(os.getcwd()))
 
@@ -92,6 +93,10 @@ Instrumentator().instrument(app).expose(app)
 if __name__ == "__main__":
     os.system('dvc pull models/ -R --force')
     # log.info("Data pulled from dvc")
+    storage_client = storage.Client()
+    bucket = storage_client.bucket("dtumlops_data_bucket")
+    blob = bucket.blob("models/model.pt")
+    blob.download_to_filename("models/model.pt")
 
     # load model
     model_path = os.path.abspath('models/model.pt')
