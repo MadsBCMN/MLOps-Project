@@ -8,6 +8,7 @@ from PIL import Image
 from torchvision import transforms
 from models.model import timm_model
 import logging
+from google.cloud import storage
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -83,6 +84,11 @@ def predict(model: nn.Module, image_folder: str) -> List[int]:
 if __name__ == '__main__':
     os.system('dvc pull models --force')
     # log.info("Data pulled from dvc")
+    storage_client = storage.Client()
+    bucket = storage_client.bucket("dtumlops_data_bucket")
+    blob = bucket.blob("models/model.pt")
+    blob.download_to_filename("models/model.pt")
+    # log.info("Model saved to gcs")
 
     model_path = "models/model.pt"  # Path to the saved model
     image_folder = "data/example_images"  # Path to the folder with images
