@@ -1,0 +1,12 @@
+steps:
+#Deploy container image to Cloud Run
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  entrypoint: gcloud
+  args:
+  - 'run'
+  - 'deploy'
+  - 'predict'
+  - '--image'
+  - 'gcr.io/dtumlops-410818/predict:latest'
+  - '--region'
+  - 'europe-north1'
