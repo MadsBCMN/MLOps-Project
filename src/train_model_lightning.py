@@ -186,6 +186,10 @@ def train_evaluate(config: OmegaConf) -> None:
         trainer.test(model)
 
     # Save the final model
+    try:
+        os.mkdir("models")
+    except OSError as error:
+        log.error("Could not create models directory")
     torch.save(model.state_dict(), 'models/model.pt')
     run.log_model(path='models/model.pt', name="resnet18")
     log.info("Model saved locally")
