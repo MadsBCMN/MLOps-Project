@@ -50,11 +50,7 @@ def load_model(model_path):
     model.eval()
     return model
 
-model_path = os.path.abspath('models/model.pt')
-try:
-    model = load_model(model_path)
-except Exception as e:
-    raise RuntimeError(f"Error loading the model: {e}")
+
 
 def process_image(image: Image.Image) -> torch.Tensor:
     transform = transforms.Compose([
@@ -96,5 +92,13 @@ Instrumentator().instrument(app).expose(app)
 if __name__ == "__main__":
     os.system('dvc pull models/ -R --force')
     # log.info("Data pulled from dvc")
+
+    # load model
+    model_path = os.path.abspath('models/model.pt')
+    try:
+        model = load_model(model_path)
+    except Exception as e:
+        raise RuntimeError(f"Error loading the model: {e}")
+
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)
