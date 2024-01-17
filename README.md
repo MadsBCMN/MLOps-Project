@@ -88,18 +88,27 @@ The directory structure of the project looks like this:
 │   └── train_model_lightning.py <- Script for training models with PyTorch Lightning
 │
 ├── tests                  <- Test files
-├── .dvcignore             <- DVC ignore file
-├── .gitignore             <- Git ignore file
-├── .pre-commit-config.yaml<- Pre-commit configuration
-├── LICENSE                <- Open-source license if one is chosen
-├── Makefile               <- Makefile with convenience commands like `make data` or `make train`
+├── .dvcignore             <- Specifies files that DVC should ignore.
+├── .gitignore             <- Specifies intentionally untracked files to ignore in Git.
+├── .pre-commit-config.yaml<- Configuration file for pre-commit hooks to standardize code.
+├── LICENSE                <- The license for the project.
+├── Makefile               <- Makefile with commands to facilitate project tasks.
 ├── README.md              <- The top-level README for developers using this project.
-├── requirements.txt       <- The requirements file for reproducing the analysis environment
-├── requirements_dev.txt   <- Additional requirements for development
-├── requirements_frontend.txt <- Frontend specific requirements
-└── requirements_tests.txt <- Testing specific requirements
-
-A LITTLE CLEANUP ON THE SOURCE?
+├── __init__.py            <- Initialization script that can turn folders into Python packages.
+├── cloudbuild-predict.yaml<- Google Cloud Build configuration for prediction tasks.
+├── cloudbuild-run-frontend.yaml <- Cloud Build configuration for running the frontend.
+├── cloudbuild-run-predict.yaml <- Cloud Build configuration for running predictions.
+├── cloudbuild-run-training.yaml <- Cloud Build configuration for training tasks.
+├── cloudbuild-training.yaml <- Cloud Build configuration for setting up training environments.
+├── cloudbuild.yaml        <- Main Cloud Build configuration file.
+├── clouddeploy-run-predict.yaml <- Cloud Deploy configuration for prediction services.
+├── models.dvc             <- DVC file to manage versions of models.
+├── profiler.dvc           <- DVC file related to profiling tools or output.
+├── pyproject.toml         <- Configuration file for Python project settings.
+├── requirements.txt       <- The requirements file for reproducing the analysis environment.
+├── requirements_dev.txt   <- The requirements file for development environments.
+├── requirements_frontend.txt <- Requirements file for frontend-specific dependencies.
+└── requirements_tests.txt <- Requirements file for testing environments.
 
 
 ```
