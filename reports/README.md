@@ -225,8 +225,7 @@ end of the project.
 >
 > Answer:
 
---- Yes, our workflow included using branches and pull requests to some extent. We often worked together on the project or in different files, so using different branches was only sometimes necessary. When we worked independently, each team member had their own branch for working on new features or bug fixes. When applicable, we updated our branch from main. This has two benefits: Catch potential merge conflicts earlier in development, and also not being too many commits behind main on long running branches. Before merging the code into the main branch, we would create a pull request that other team members could review and comment on. This process helped to ensure that all changes were well-tested and documented before being integrated into the main code.
-*** NOTE REVISIT *** ---
+--- Yes, our workflow included using branches and pull requests to some extent. We often worked together on the project or in different files, so using different branches was only sometimes necessary. When we worked independently, each team member had their own branch for working on new features or bug fixes. When applicable, we updated our branch from main. This has two benefits: Catch potential merge conflicts earlier in development, and also not being too many commits behind main on long running branches. Before merging the code into the main branch, we would create a pull request that other team members could review and comment on. This process helped to ensure that all changes were well-tested and documented before being integrated into the main code. ---
 
 ### Question 10
 
@@ -241,8 +240,7 @@ end of the project.
 >
 > Answer:
 
---- Yes, we did use DVC to manage data in our project on google cloud bucket as remote storage. DVC is a data version control tool that allows us to track and store the different versions of our data, ensuring that we can reproduce our results and compare different iterations of our models. We primarily used dvc as a more optimal data storage and versioning solution rather than storing the vast amounts of data in our github repository. The downside is it adds complexity in the form of additional commands and configuration files, and requires everything to be perfectly synced, as git is in charge of .dvc files specifying hashes and versioning of files.
-*** NOTE REVISIT ***  ---
+--- Yes, we did use DVC to manage data in our project on google cloud bucket as remote storage. DVC is a data version control tool that allows us to track and store the different versions of our data, ensuring that we can reproduce our results and compare different iterations of our models. We primarily used dvc as a more optimal data storage and versioning solution rather than storing the vast amounts of data in our github repository. The downside is it adds complexity in the form of additional commands and configuration files, and requires everything to be perfectly synced, as git is in charge of .dvc files specifying hashes and versioning of files. ---
 
 
 ### Question 11
@@ -259,7 +257,8 @@ end of the project.
 >
 > Answer:
 
---- We have implemented a continuous integration (CI) workflow using GitHub Actions. In our continuous integration setup, we've structured the CI pipeline into a single workflow named "Run tests." This workflow automatically runs unit tests whenever a change is pushed to the repository. It also ensures the project builds and runs correctly on multiple operating systems and Python versions. The dependencies, including project dependencies and test requirements specified in requirements.txt and requirements_tests.txt, are cached for faster subsequent runs using GitHub Actions' caching mechanism. The DVC cache is also cached separately, enhancing the efficiency of data retrieval during testing. The CI workflow includes testing with pytest to validate the code's functionality. This ensures that unit tests are executed, providing feedback on the correctness of the codebase. ---
+--- We have implemented a continuous integration (CI) workflow using GitHub Actions. In our continuous integration setup, we've structured the CI pipeline into a single workflow named "Run tests." This workflow automatically runs unit tests whenever a change is pushed to the repository. It also ensures the project builds and runs correctly on linux system and with Python 3.11 version. Only Ubuntu 22.04.3 LTS was tested, as we developed linux server based system based on web frontend. The dependencies, including project dependencies and test requirements specified in requirements.txt and requirements_tests.txt, are cached for faster subsequent runs using GitHub Actions' caching mechanism. The DVC cache is also cached separately, enhancing the efficiency of data retrieval during testing.
+The CI workflow includes testing with pytest to validate the code's functionality. This ensures that unit tests are executed, providing feedback on the correctness of the codebase. ![Github actions](figures/github_actions.png) ---
 
 ## Running code and tracking experiments
 
@@ -278,7 +277,7 @@ end of the project.
 >
 > Answer:
 
---- Yes, we ensured reconfigurability and reproducibility by employing config files for experiments. We utilized multiple configuration files to test different variables and scenarios (see exp1.yaml and exp2.yaml). we also used argparser to do quick tests along the way, looking like this: python your_script.py --lr 0.0005 --batch_size 40 --n_epochs 20 --seed 42 --k_fold --profile. Finally, we did a parameter sweep approach to systematically explore various hyperparameter combinations and find the most optimal hyperparameter. We tested 12 images with our prediction application and with the hyperparameters found with sweep and all 12 images were classified correctly.  ---
+--- Yes, we ensured reconfigurability and reproducibility by employing Hydra config files for experiments. We utilized multiple configuration files to test different variables and scenarios (see exp1.yaml and exp2.yaml). We also used overrides to do quick tests along the way, looking like this: python src/train_model_lightning.py lr=0.0005 batch_size=40 n_epochs=20 seed=42 k_fold=True profile=False. Finally, we did a Bayesian parameter sweep with Weights and Biases to explore the defined hyperparameter search space and find optimized hyperparameters through 5-fold cross-validation over 483 runs. Finally the the model was trained on the full train set and tested on the test set with an accuracy of 98.47%. ---
 
 ### Question 13
 
@@ -293,7 +292,7 @@ end of the project.
 >
 > Answer:
 
---- To ensure reproducibility, we used the logging module to log configuration parameters, such as learning rate, batch size, number of epochs and seed which are logged at different steps in the script. An overview of the experimental setup is saved, and this way, we could always go back and reproduce an experiment by going to the log file src/outputs/, which provides an overview of the configuration and details of the training and evaluation phases. ---
+--- All runs were logged using Weights & Biases (W&B) to monitor and visualize key metrics for our experiments. Furthermore Hydra logs with run specific configuration parameters provided an overview of the experimental setup. This way, we could always go back and reproduce an experiment by going to the log file in the "outputs" folder, which provides an overview of the configuration and details of the training and evaluation phases. Reproducibility was also aided by seeding Pytorch, CUDA, Kfold splits and Dataloader workers. Weights and biases was also set to save the source code for a given run and the resulting model if applicable. ---
 
 ### Question 14
 
