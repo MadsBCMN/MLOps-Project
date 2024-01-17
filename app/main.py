@@ -14,15 +14,8 @@ from fastapi import HTTPException
 from prometheus_fastapi_instrumentator import Instrumentator
 from prometheus_client import Counter
 from google.cloud import storage
-
 sys.path.append(os.path.normcase(os.getcwd()))
-
-
-### MODEL ####
-# Global variables
-MODEL_NAME = 'resnet18'
-NUM_CLASSES = 4
-
+from src.models.model import timm_model
 
 def get_data():
     if not os.path.exists('models/model.pt'):
@@ -36,21 +29,6 @@ def get_data():
 
 get_data()
 
-def timm_model() -> nn.Module:
-    """
-    Creates a custom model based on timm's resnet18 with modified output layer.
-
-    Returns:
-        nn.Module: Custom model.
-    """
-    # Load pre-trained resnet18 model
-    model = timm.create_model(MODEL_NAME, pretrained=True, in_chans=1)
-
-    # Modify the output layer to match the number of classes
-    model.fc = nn.Linear(model.fc.in_features, NUM_CLASSES)
-
-    return model
-####################
 # Create a counter metric to track image classification requests
 image_classification_requests = Counter('image_classification_requests_total', 'Total number of image classification requests')
 

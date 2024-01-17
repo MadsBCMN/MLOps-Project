@@ -174,7 +174,7 @@ end of the project.
 >
 > Answer:
 
---- We complied with PEP8 coding standards for code quality and format using global variables, docstring comments, typing, and informative comments. Consistent coding standards are essential to improve readability, maintainability, and collaboration in larger projects. They promote a consistent style, making it easier for others to understand and contribute. Adhering to good code quality also makes controlling and automating debugging easier. ---
+--- We complied with PEP8 coding standards for code quality and format using global variables, docstring comments, typing, and informative comments. Consistent coding standards are essential to improve readability, maintainability, and collaboration in larger projects. They promote a consistent style, making it easier for others to understand and contribute. Adhering to good code quality also makes controlling and automating debugging easier. Lastly, we use ruff as a tool to check if you code is PEP8 compliant. ---
 
 ## Version control
 
@@ -377,7 +377,7 @@ In practice we used Google cloud build to build our docker images and push them 
 >
 > Answer:
 
---- We used GCP Bucket for data storage and integrated it with our data version control system. It facilitates efficient data management. We created a trigger workflow in Cloud Build to build Docker images automatically and push them to the Container Registry. This automates the process, streamlines the deployment pipeline, and ensures consistency and reliability. Additionally, we deployed our FastAPI and frontend application for model inference using Cloud Run Services, which enables us to scale our API based on demand and ensure optimal performance. For training we used Vertex AI, which gives granular control of machine ressources, and also Cloud Run Job, which is a serverless platform for running containerized jobs. 
+--- We used GCP Bucket for data storage and integrated it with our data version control system. It facilitates efficient data management. We created a trigger workflow in Cloud Build to build Docker images automatically and push them to the Container Registry. This automates the process, streamlines the deployment pipeline, and ensures consistency and reliability. Additionally, we deployed our FastAPI and frontend application for model inference using Cloud Run Services, which enables us to scale our API based on demand and ensure optimal performance. For training we used Vertex AI, which gives granular control of machine ressources, and also Cloud Run Job, which is a serverless platform for running containerized jobs.
 
 Google Cloud Workflows
 Pub/Sub
