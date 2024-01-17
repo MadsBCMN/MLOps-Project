@@ -347,8 +347,6 @@ Here is the link to one of our Dockerfiles:
 
 In practice we used Google cloud build to build our docker images and push them to the registry.
 
-***NOTE REVISIT*** ---
-
 ### Question 16
 
 > **When running into bugs while trying to run your experiments, how did you perform debugging? Additionally, did you**
@@ -362,7 +360,7 @@ In practice we used Google cloud build to build our docker images and push them 
 >
 > Answer:
 
----When we encountered errors during our experiments, we used a combination of debugging methods, both traditional debugging techniques with print statements and step-by-step inspection of the code to identify issues, as well as using debugging tools such as profilers. We performed a single profiling run using cProfile on our main code to understand the runtime behavior of different features and methods. We used it to answer questions about the performance of our code, such as how often each method was called and how much time each method spent.---
+---When we encountered errors during our experiments, we used a combination of debugging methods, both traditional debugging techniques with logging and step-by-step inspection of the code with breakpoints to identify issues, as well as using debug mode break on errors. We performed profiling using Pytorch profiler with tensorboard on our two training scripts code to compare our Pytorch and Pytorch Lightning versions. We used it to answer questions about the performance of our code, such as how often each method was called and how much time each method spent, as well as CPU, GPU and memory usage. ---
 
 ## Working in the cloud
 
@@ -379,9 +377,16 @@ In practice we used Google cloud build to build our docker images and push them 
 >
 > Answer:
 
---- We used GCP Bucket for data storage and integrated it with our data version control system. It facilitates efficient data management. We created a trigger workflow in Cloud Build to build Docker images automatically. This automates the process, streamlines the deployment pipeline, and ensures consistency and reliability. Additionally, we deployed our FastAPI application for model inference using either Cloud Functions, which enables us to scale our API based on demand and ensure optimal performance.
-Monitoring?
-Vertex Ai?
+--- We used GCP Bucket for data storage and integrated it with our data version control system. It facilitates efficient data management. We created a trigger workflow in Cloud Build to build Docker images automatically and push them to the Container Registry. This automates the process, streamlines the deployment pipeline, and ensures consistency and reliability. Additionally, we deployed our FastAPI and frontend application for model inference using Cloud Run Services, which enables us to scale our API based on demand and ensure optimal performance. For training we used Vertex AI, which gives granular control of machine ressources, and also Cloud Run Job, which is a serverless platform for running containerized jobs. 
+
+Google Cloud Workflows
+Pub/Sub
+Audit Logging
+Eventarc API
+Logging
+IAM
+Finally, we used Cloud Monitoring to monitor the performance of our deployed model.
+
 **NOTE REVISIT** ---
 
 ### Question 18
