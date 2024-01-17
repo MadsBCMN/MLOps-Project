@@ -94,7 +94,7 @@ if __name__ == "__main__":
     os.system('dvc pull models/ -R --force')
     # log.info("Data pulled from dvc")
     storage_client = storage.Client()
-    bucket = storage_client.bucket("dtumlops_data_bucket")
+    bucket = storage_client.bucket("mri-model")
     blob = bucket.blob("models/model.pt")
     blob.download_to_filename("models/model.pt")
 
