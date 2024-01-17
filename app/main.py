@@ -24,13 +24,18 @@ sys.path.append(os.path.normcase(os.getcwd()))
 MODEL_NAME = 'resnet18'
 NUM_CLASSES = 4
 
+
 def get_data():
-    os.system('dvc pull models/ -R --force')
-    # log.info("Data pulled from dvc")
-    storage_client = storage.Client()
-    bucket = storage_client.bucket("mri-model")
-    blob = bucket.blob("models/model.pt")
-    blob.download_to_filename("models/model.pt")
+    if not os.path.exists('models/model.pt'):
+        os.system('dvc pull models/ -R --force')
+        # log.info("Data pulled from dvc")
+        storage_client = storage.Client()
+        bucket = storage_client.bucket("mri-model")
+        blob = bucket.blob("models/model.pt")
+        blob.download_to_filename("models/model.pt")
+
+
+get_data()
 
 def timm_model() -> nn.Module:
     """
