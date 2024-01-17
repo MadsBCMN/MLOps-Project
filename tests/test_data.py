@@ -5,9 +5,6 @@ sys.path.append(os.path.normcase(os.getcwd()))
 from src.data.dataloader import dataloader
 from tests.config import assert_images
 from src.data.config import image_size
-import pytest
-
-
 
 
 def test_data():
@@ -23,7 +20,7 @@ def test_data():
 
     assert len(dataset_train) == n_train, "The number of training tensors is not equal to the number of training images"
     assert len(dataset_test) == n_test, "The number of test tensors is not equal to the number of test images"
-    
+
     l_train = []
     for data, label in dataset_train:
         assert data.size() == (1,) + image_size, f"The shape of the train tensors is not correct, expected (1, 86, 86) but received {data.size()}"

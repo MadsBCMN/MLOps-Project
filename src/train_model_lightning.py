@@ -14,7 +14,7 @@ from typing import Any, Dict, List, Tuple
 from pytorch_lightning.loggers import WandbLogger
 from torch.profiler import profile, tensorboard_trace_handler, ProfilerActivity
 from google.cloud import storage
-import zipfile
+
 
 
 # Set the working directory to project root
@@ -23,9 +23,6 @@ sys.path.append(os.path.normcase(os.getcwd()))
 
 # setup logging
 log = logging.getLogger(__name__)
-
-
-
 
 # Set the default precision
 torch.set_float32_matmul_precision('medium')

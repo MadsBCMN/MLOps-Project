@@ -1,7 +1,5 @@
 import torch
 import os
-import sys
-
 
 def dataloader() -> torch.utils.data.Dataset:
     """Return train and test dataloaders for your MRI dataset."""
@@ -21,4 +19,3 @@ def dataloader() -> torch.utils.data.Dataset:
     test_dataset = torch.utils.data.TensorDataset(test_data, test_labels)
 
     return train_dataset, test_dataset
-

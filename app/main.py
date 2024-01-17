@@ -1,23 +1,22 @@
 import io
 import os
 import sys
-sys.path.append(os.path.normcase(os.getcwd()))
-from fastapi import FastAPI, UploadFile, File
-from fastapi.responses import JSONResponse
 import torch
 import numpy as np
-from PIL import Image
-from torchvision import transforms
-import torch
 import torch.nn as nn
 import timm
+import uvicorn
+from fastapi import FastAPI, UploadFile, File
+from fastapi.responses import JSONResponse
+from PIL import Image
+from torchvision import transforms
 from fastapi import HTTPException
 from prometheus_fastapi_instrumentator import Instrumentator
 from prometheus_client import Counter
 from google.cloud import storage
-import uvicorn
 
 sys.path.append(os.path.normcase(os.getcwd()))
+
 
 ### MODEL ####
 # Global variables

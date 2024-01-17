@@ -4,7 +4,7 @@ import logging
 import torch
 import torch.nn as nn
 import torch.optim as optim
-from torch.utils.data import DataLoader, Subset, TensorDataset
+from torch.utils.data import DataLoader, Subset
 from models.model import timm_model
 from data.dataloader import dataloader
 from sklearn.model_selection import KFold
