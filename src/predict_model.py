@@ -82,7 +82,7 @@ def predict(model: nn.Module, image_folder: str) -> List[int]:
 
 
 if __name__ == '__main__':
-    # os.system('dvc pull models --force')
+    os.system('dvc pull models --force')
     # log.info("Data pulled from dvc")
     storage_client = storage.Client()
     bucket = storage_client.bucket("mri-model")
