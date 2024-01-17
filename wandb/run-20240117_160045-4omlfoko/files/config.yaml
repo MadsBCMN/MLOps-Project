@@ -1,0 +1,75 @@
+wandb_version: 1
+
+lr:
+  desc: null
+  value: 0.0006798494015908689
+batch_size:
+  desc: null
+  value: 40
+n_epochs:
+  desc: null
+  value: 20
+seed:
+  desc: null
+  value: 42
+n_workers:
+  desc: null
+  value: 4
+k_fold:
+  desc: null
+  value: false
+profile:
+  desc: null
+  value: false
+gcs:
+  desc: null
+  value: true
+_wandb:
+  desc: null
+  value:
+    code_path: code/src/train_model_lightning.py
+    python_version: 3.11.7
+    cli_version: 0.16.1
+    framework: huggingface
+    huggingface_version: 4.36.2
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    start_time: 1705503645.926514
+    t:
+      1:
+      - 1
+      - 5
+      - 9
+      - 11
+      - 41
+      - 49
+      - 50
+      - 53
+      - 55
+      - 63
+      - 103
+      - 105
+      2:
+      - 1
+      - 5
+      - 9
+      - 11
+      - 41
+      - 49
+      - 50
+      - 53
+      - 55
+      - 63
+      - 103
+      - 105
+      3:
+      - 2
+      - 16
+      - 23
+      4: 3.11.7
+      5: 0.16.1
+      6: 4.36.2
+      8:
+      - 3
+      - 5
+      13: windows-amd64
