@@ -16,6 +16,27 @@ This model is trained on the [Brain Tumor Classification MRI](https://www.kaggle
 ### Models
 The project aims to explore a deep learning architectures for image classification, focusing on convolutional neural networks (CNNs). We use the ResNet-18 architecture, available through the TIMM (PyTorch Image Models) framework, for image classification. The choice is driven by TIMM's extensive collection of pre-trained models, with ResNet-18 offering a balanced trade-off between model complexity and computational efficiency.
 
+## Prerequisites
+
+Before you begin, ensure you have met the following requirements:
+- Python 3.8 or higher
+- Docker (for containerization)
+- Access to command line interface
+
+## Installation
+
+Clone the repository to your local machine:
+
+```bash
+git clone https://github.com/MadsBCMN/MLOps-Project.git
+```
+
+Install the necessary dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
 ## Project structure
 
 
