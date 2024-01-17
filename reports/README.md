@@ -330,16 +330,22 @@ In the first screenshot, we see the table of the sweep table runs sorted accordi
 >
 > Answer:
 
---- For our project, Docker played a role in creating containerized applications for various stages of our workflow. We developed several Docker images to encapsulate different components of our pipeline, including training, inference, and deployment. For example, for the training, this ensures that the training process is consistent and reproducible across different environments. To build our docker image for our API, we used:
+--- For our project, Docker played a role in creating containerized applications for various stages of our workflow. We developed several Docker images to encapsulate different components of our pipeline, including training, inference, and deployment. For example, for the training, this ensures that the training process is consistent and reproducible across different environments. To build our docker image for our prediction API, we could use:
 
-docker build -t my_app.
+docker build -f dockerfiles/predict.dockerfile -t predict:latest .
 
-And to build the container, we used:
+To push the conatainer to Google Cloud Registry, we used:
+docker tag predict gcr.io/dtumlops-410818/predict
+docker push gcr.io/dtumlops-410818/predict
 
-docker run --name appcontainer -p 80:80 my_app
+And to run the container, we used:
+
+docker run --name apiprediction -p 8000:8000 gcr.io/dtumlops-410818/predict:latest
 
 Here is the link to one of our Dockerfiles:
 [Dockerfile](https://github.com/MadsBCMN/MLOps-Project/blob/main/dockerfiles/predict-cloud.dockerfile)
+
+In practice we used Google cloud build to build our docker images and push them to the registry.
 
 ***NOTE REVISIT*** ---
 
