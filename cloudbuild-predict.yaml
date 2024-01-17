@@ -13,7 +13,7 @@ steps:
   args:
   - '-c'
   - |
-    gsutil cp -v gs://dtumlops_data_bucket/models/model.pt models/
+    gsutil cp -v gs://mri-model/models/model.pt models/
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-f', 'dockerfiles/predict-cloud.dockerfile', '-t', 'gcr.io/dtumlops-410818/predict:latest', '.']
 - name: 'gcr.io/cloud-builders/docker'
