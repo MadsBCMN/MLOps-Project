@@ -197,19 +197,19 @@ def train_evaluate(config: OmegaConf) -> None:
     try:
         os.mkdir("models")
     except OSError as error:
-        log.error("Could not create models directory")
+        log.info("Models directory already exists")
     torch.save(model.state_dict(), 'models/model.pt')
     run.log_model(path='models/model.pt', name="resnet18")
     log.info("Model saved locally")
 
     # Push new model to dvc
-    os.system('dvc add models')
-    os.system('dvc push models')
-    log.info("Model pushed to dvc")
+    # os.system('dvc add models')
+    # os.system('dvc push models')
+    # log.info("Model pushed to dvc")
 
     if hparams["gcs"]:
         storage_client = storage.Client()
-        bucket = storage_client.bucket("dtumlops_data_bucket")
+        bucket = storage_client.bucket("mri-model")
         blob = bucket.blob("models/model.pt")
         blob.upload_from_filename("models/model.pt")
         log.info("Model saved to gcs")
@@ -221,8 +221,8 @@ def train_evaluate(config: OmegaConf) -> None:
 if __name__ == "__main__":
     # Pull and unpack data, fetch models from dvc
     os.system('dvc pull data/processed --force')
-    os.system('dvc pull models --force')
-    log.info("Data pulled from dvc")
+    # os.system('dvc pull models --force')
+    # log.info("Data pulled from dvc")
     # Unzip the raw data
     # with zipfile.ZipFile("data/raw/Training.zip", 'r') as zip_ref:
     #     zip_ref.extractall("data/raw/")
