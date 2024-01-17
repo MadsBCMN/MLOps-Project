@@ -208,7 +208,7 @@ end of the project.
 >
 > Answer:
 
---- The total code coverage of our project is 100%. This means that all of the code in our project has been executed at least once during testing. While 100% code coverage does not guarantee error-free code, it can increase the likelihood of detecting and fixing bugs early in development. Therefore, we can still not trust the code to be error free or work as intended as it does not cover aspects like logical errors or incorrect business logic. ---
+--- The total code coverage of our project is 100%. This means that all of the code in our project has been executed at least once during testing. While 100% code coverage does not guarantee error-free code, it can increase the likelihood of detecting and fixing bugs early in development. Therefore, we can still not trust the code to be error free or work as intended as it does not cover aspects like logical errors or incorrect business logic. Expanding to integration and system testing wouldhelp in identifying errors at higher levels of the system abstraction.  ---
 
 
 
@@ -225,7 +225,7 @@ end of the project.
 >
 > Answer:
 
---- Yes, our workflow included using branches and pull requests to some extent. We often worked together on the project or in different files, so using different branches was only sometimes necessary. When we worked independently, each team member had their own branch for working on new features or bug fixes. Before merging the code into the main branch, we would create a pull request that other team members could review and comment on. This process helped to ensure that all changes were well-tested and documented before being integrated into the main code.
+--- Yes, our workflow included using branches and pull requests to some extent. We often worked together on the project or in different files, so using different branches was only sometimes necessary. When we worked independently, each team member had their own branch for working on new features or bug fixes. When applicable, we updated our branch from main. This has two benefits: Catch potential merge conflicts earlier in development, and also not being too many commits behind main on long running branches. Before merging the code into the main branch, we would create a pull request that other team members could review and comment on. This process helped to ensure that all changes were well-tested and documented before being integrated into the main code.
 *** NOTE REVISIT *** ---
 
 ### Question 10
@@ -241,7 +241,7 @@ end of the project.
 >
 > Answer:
 
---- Yes, we did use DVC to manage data in our project. DVC is a data version control tool that allows us to track and store the different versions of our data, ensuring that we can reproduce our results and compare different iterations of our models. We primarily used dvc as a more optimal data learning solution rather than storing the 7GB in our github repository.
+--- Yes, we did use DVC to manage data in our project on google cloud bucket as remote storage. DVC is a data version control tool that allows us to track and store the different versions of our data, ensuring that we can reproduce our results and compare different iterations of our models. We primarily used dvc as a more optimal data storage and versioning solution rather than storing the vast amounts of data in our github repository. The downside is it adds complexity in the form of additional commands and configuration files, and requires everything to be perfectly synced, as git is in charge of .dvc files specifying hashes and versioning of files.
 *** NOTE REVISIT ***  ---
 
 
