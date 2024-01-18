@@ -132,8 +132,6 @@ def train_evaluate(config: OmegaConf) -> None:
     else:
         acceleration = "cpu"
 
-
-
     if config.k_fold:
         # set profiler
         if config.profile:
