@@ -315,8 +315,8 @@ We utilized Weights & Biases (W&B) to monitor and visualize key metrics for our 
 ![Sweep table sorted asc on mean_val_accuracy](figures/sweep_table.png)
 ![Sweep dashboard with all runs](figures/dashboard.png)
 ![Jolly-sweep-47 ](figures/jelly47.png)
-In the first screenshot, we see the table of the sweep table runs sorted according to mean_val_accuracy. The second image shows a dashboard of all the performance, where we can compare all runs, or just selected runs. The last image shows the performance of the metrics we are currently using in our model. Let's take a closer look at the last image. We tracked various metrics during our experiments, including train loss, validation accuracy per epoch, validation accuracy per training step, epoch, and average validation accuracy. Train loss is a metric that indicates how well the model learns during the training process. Monitoring the validation accuracy per epoch helps us understand the overall performance trends across training iterations. Validation accuracy per training step provides a more detailed overview, allowing us to detect potential overfitting or rapid improvements. Epoch and average validation accuracy are crucial metrics to assess the overall effectiveness of our model. A good indicator that these are suitable parameters for our model is if train_loss is the inverse of avg_los_accuracy, as seen for jolly-sweep-47 in the last image. ---
-The full report can be seen here: [Weight&Biases report](https://api.wandb.ai/links/mlops_project_team/0szdkbjq) 
+In the first screenshot, we see the table of the sweep table runs sorted according to mean_val_accuracy. The second image shows a dashboard of all the performance, where we can compare all runs, or just selected runs. The last image shows the performance of the metrics we are currently using in our model. Let's take a closer look at the last image. We tracked various metrics during our experiments, including train loss, validation accuracy per epoch, validation accuracy per training step, epoch, and average validation accuracy. Train loss is a metric that indicates how well the model learns during the training process. Monitoring the validation accuracy per epoch helps us understand the overall performance trends across training iterations. Validation accuracy per training step provides a more detailed overview, allowing us to detect potential overfitting or rapid improvements. Epoch and average validation accuracy are crucial metrics to assess the overall effectiveness of our model. A good indicator that these are suitable parameters for our model is if train_loss is the inverse of avg_los_accuracy, as seen for jolly-sweep-47 in the last image. The full report can be seen here: [Weight&Biases report](https://api.wandb.ai/links/mlops_project_team/0szdkbjq) ---
+
 ### Question 15
 
 > **Docker is an important tool for creating containerized applications. Explain how you used docker in your**
@@ -531,4 +531,4 @@ Monitoring the Cloud Build, frontend and predict services for availability and l
 >
 > Answer:
 
---- ---
+--- lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum ---
