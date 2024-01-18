@@ -37,6 +37,17 @@ Install the necessary dependencies:
 pip install -r requirements.txt
 ```
 
+Standing in the root directory, run the following command:
+
+```bash
+streamlit run app/frontend.py
+```
+
+This will open the application in our browser. You are now able to upload an image of a MRI brain-scan. When you click "Classify MRI Scan", the application will return the predicted tumor category for the image.
+
+
+
+
 ## Project structure
 
 
