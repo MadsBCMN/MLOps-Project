@@ -124,6 +124,15 @@ def train_evaluate(config: OmegaConf) -> None:
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(hparams["seed"])
 
+    # Setting the device
+    if torch.cuda.is_available():
+        acceleration = "gpu"
+    elif torch.backends.mps.is_available():
+        acceleration = "mps"
+    else:
+        acceleration = "cpu"
+
+
 
     if config.k_fold:
         # set profiler
@@ -141,14 +150,14 @@ def train_evaluate(config: OmegaConf) -> None:
             # Re-initialize the model for each fold
             model = LightningModel(hparams)
             # compile model if on linux
-            # if sys.platform == "linux" or sys.platform == "linux2":
+            # if sys.platform == "linux" or sys.platform == "linux2" or sys.platform == "darwin":
             #     model = torch.compile(model)
 
             trainer = pl.Trainer(
                 logger=wandb_logger,
                 max_epochs=config.n_epochs,
                 devices=1,
-                accelerator="gpu" if torch.cuda.is_available() else "cpu",
+                accelerator=acceleration,
                 log_every_n_steps=10
             )
 
@@ -174,14 +183,14 @@ def train_evaluate(config: OmegaConf) -> None:
         # Standard train-test split
         model = LightningModel(hparams)
         # compile model if on linux
-        # if sys.platform == "linux" or sys.platform == "linux2":
+        # if sys.platform == "linux" or sys.platform == "linux2" or sys.platform == "darwin":
         #     model = torch.compile(model)
 
         trainer = pl.Trainer(
             logger=wandb_logger,
             max_epochs=config.n_epochs,
             devices=1,
-            accelerator="gpu" if torch.cuda.is_available() else "cpu",
+            accelerator=acceleration,
             log_every_n_steps=10
         )
         trainer.fit(model)
@@ -191,6 +200,11 @@ def train_evaluate(config: OmegaConf) -> None:
 
 
     # Save the final model
+    #  compile model if on linux
+    if sys.platform == "linux" or sys.platform == "linux2" or sys.platform == "darwin":
+        model = torch.compile(model)
+
+
     try:
         os.mkdir("models")
     except OSError as error:
