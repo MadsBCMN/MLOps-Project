@@ -60,6 +60,12 @@ streamlit run app/frontend.py
 This will open the application in our browser. You are now able to upload an image of a MRI brain-scan. When you click "Classify MRI Scan", the application will return the predicted tumor category for the image.
 
 
+## Visualizations
+
+Follow this link to access training report from wandb
+
+https://api.wandb.ai/links/mlops_project_team/0szdkbjq
+
 ## Project structure
 
 
