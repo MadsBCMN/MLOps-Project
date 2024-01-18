@@ -60,8 +60,7 @@ The directory structure of the project looks like this:
 ├── app                    <- Main application code
 │   ├── __init__.py
 │   ├── frontend.py        <- Implementation of frontend
-│   ├── main.py            <- Main application for predicting tumor type
-│   └── main_old.py        <- Older version of the main application
+│   └──  main.py            <- Main application for predicting tumor type
 │
 ├── data                   <- Data used for analysis and modeling
 │   ├── processed.dvc      <- Pointer to remote storage of processed images for training and testing
@@ -90,8 +89,7 @@ The directory structure of the project looks like this:
 │   │   ├── __init__.py
 │   │   └── model.py       <- Function for returning the model architecture
 │   │
-│   ├── outputs            <- FJERNES?
-│   ├── visualizations     <- FJERNES?
+│   ├── outputs            <- Stored Hydra outputs
 │   ├── data_drifting.py   <- Script to check for data drifting
 │   ├── predict_model.py   <- Predicts a tumor type based on a provided raw image
 │   ├── sweep.yaml         <- Configuraion file for hyperparameter sweep
