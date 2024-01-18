@@ -33,6 +33,12 @@ Clone the repository to your local machine:
 git clone https://github.com/MadsBCMN/MLOps-Project.git
 ```
 
+Create a conda environment:
+
+```bash
+conda create -n myenv python=3.11 && conda activate myenv
+```
+
 Install the necessary dependencies:
 
 ```bash
