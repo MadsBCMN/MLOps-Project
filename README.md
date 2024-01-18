@@ -33,6 +33,12 @@ Clone the repository to your local machine:
 git clone https://github.com/MadsBCMN/MLOps-Project.git
 ```
 
+Go to the root directory:
+
+```bash
+cd MLOps-Project
+```
+
 Create a conda environment:
 
 ```bash
@@ -42,10 +48,10 @@ conda create -n myenv python=3.11 && conda activate myenv
 Install the necessary dependencies:
 
 ```bash
-pip install -r requirements.txt
+pip install -r requirements_frontend.txt
 ```
 
-Standing in the root directory, run the following command:
+Run the following command:
 
 ```bash
 streamlit run app/frontend.py
