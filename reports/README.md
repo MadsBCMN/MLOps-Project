@@ -500,8 +500,7 @@ The reponse is: {"class":"glioma","class_label":0}. This means that the image is
 When changes to the codebase are committed to Gihub, tests are performed in Github actions. There are 7 Cloud Build triggers which perform the actions needed to perform CI/CD on the Google cloud platform, som are automated and all can be triggered manually as needed. If a commit with the tag "build" is pushed to the repository, the "build-deploy-predict-trigger" and "build-deploy-frontend-trigger" triggers are executed. These build the predict and frontend docker images, pushes them to the Container Registry and deploys them on Cloud Run Service.
 DVC is used as data repository, which uses a GCP bucket as remote storage. Audit logging is enabled on the bucket and and logs monitored by the Eventarc service. If logs indicate that changes are made to files in the training data folder, a message is sent to a Pub/Sub topic where a subscription issues a webhook to activate Google Cloud Workflow. This workflow builds and deploys new training and predict images in parallel, trains a new model and deploys a new predict API with the new model. This is all done by activating the appropriate triggers in Cloud Build to enable a unified trigger configuration with cloud build files stored in Github, and monitoring in Cloud Build.
 Training of the model is done in Cloud Run Job, where finetuning of the ResNet18 model from TIMM is monitored and logged by Weights & Biases. The streamlit frontend allows the user to upload an MRI image and get the classification of the image from the predict API.
-Monitoring the Cloud Build, frontend and predict services for availability and latency is done with Cloud Monitoring. Any code issues can then be relayed to dev team and resolved by changes to github repository, thereby closing the MLOps cycle.
----
+Monitoring the Cloud Build, frontend and predict services for availability and latency is done with Cloud Monitoring. Any code issues can then be relayed to dev team and resolved by changes to github repository, thereby closing the MLOps cycle. ---
 
 ### Question 26
 
@@ -515,7 +514,7 @@ Monitoring the Cloud Build, frontend and predict services for availability and l
 >
 > Answer:
 
---- When working both with google drive and cloud storage, we experienced some issues related to auchentication. We initially did the setup for the project on one Google account. However, other team members would then experience problems with auchentication when using dvc pull for instance. We ended up using a setup with public read access, in order for all members and interested parties to have the access they needed. For a future project, where data might be more sentitive, this approach should definately be revisited. ---
+--- When working both with google drive and cloud storage, we experienced some issues related to auchentication. We initially did the setup for the project on one Google account. However, other team members would then experience problems with auchentication when using dvc pull for instance. We ended up using a setup with public read access, in order for all members and interested parties to have the access they needed. For a future project, where data might be more sentitive, this approach should definately be revisited. The added complexity of using dvc with git as master for .dvc data files requires perfect synchronization, otherwise we encountered errors in dvc with mismatching hashes in .dvc files and remote storage. ---
 
 ### Question 27
 
