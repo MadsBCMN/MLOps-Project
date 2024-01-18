@@ -208,7 +208,7 @@ end of the project.
 >
 > Answer:
 
---- The total code coverage of our project is 100%. This means that all of the code in our project has been executed at least once during testing. While 100% code coverage does not guarantee error-free code, it can increase the likelihood of detecting and fixing bugs early in development. Therefore, we can still not trust the code to be error free or work as intended as it does not cover aspects like logical errors or incorrect business logic. Expanding to integration and system testing wouldhelp in identifying errors at higher levels of the system abstraction.  ---
+--- The total code coverage of our testing is 100%. This means that all of the code in the relevant files has been executed at least once during testing. While 100% code coverage does not guarantee error-free code, it can increase the likelihood of detecting and fixing bugs early in development. Therefore, we can still not trust the code to be error free or work as intended as it does not cover aspects like logical errors or incorrect business logic. Expanding to integration and system testing wouldhelp in identifying errors at higher levels of the system abstraction.  ---
 
 
 
@@ -400,7 +400,7 @@ Finally, we used Cloud Monitoring to monitor the performance of our deployed mod
 > *We used the compute engine to run our ... . We used instances with the following hardware: ... and we started the*
 > *using a custom container: ...*
 >
-> Answer:
+> Answer:w
 
 --- question 18 fill here ---
 
@@ -516,7 +516,7 @@ This command sends an image file (file.jpg) to the deployed FastAPI application 
 >
 > Answer:
 
---- question 26 fill here ---
+--- When working both with google drive and cloud storage, we experienced some issues related to auchentication. We initially did the setup for the project on one Google account. However, other team members would then experience problems with auchentication when using dvc pull for instance. We ended up using a setup with loose security measures, in order for all members to have the acess they needed. For a future project, where data might be more sentitive, this approach should definately be revisited. Furthermore, we experienced some issues with the dvc config files. The config file for the cloud storage would hash every single picture in our dataset with wrong URLs. We ended up fixing this by storing our data in a ZIP file---
 
 ### Question 27
 

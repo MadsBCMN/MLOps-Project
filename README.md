@@ -25,6 +25,8 @@ Before you begin, ensure you have met the following requirements:
 
 ## Using the application
 
+In order to use the MRI-classification model, follow these steps.
+
 Clone the repository to your local machine:
 
 ```bash
@@ -44,8 +46,6 @@ streamlit run app/frontend.py
 ```
 
 This will open the application in our browser. You are now able to upload an image of a MRI brain-scan. When you click "Classify MRI Scan", the application will return the predicted tumor category for the image.
-
-
 
 
 ## Project structure
