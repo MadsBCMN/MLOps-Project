@@ -23,7 +23,7 @@ Before you begin, ensure you have met the following requirements:
 - Docker (for containerization)
 - Access to command line interface
 
-## Installation
+## Using the application
 
 Clone the repository to your local machine:
 
