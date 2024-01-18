@@ -515,7 +515,7 @@ Monitoring the Cloud Build, frontend and predict services for availability and l
 >
 > Answer:
 
---- When working both with google drive and cloud storage, we experienced some issues related to auchentication. We initially did the setup for the project on one Google account. However, other team members would then experience problems with auchentication when using dvc pull for instance. We ended up using a setup with loose security measures, in order for all members to have the acess they needed. For a future project, where data might be more sentitive, this approach should definately be revisited.---
+--- When working both with google drive and cloud storage, we experienced some issues related to auchentication. We initially did the setup for the project on one Google account. However, other team members would then experience problems with auchentication when using dvc pull for instance. We ended up using a setup with public read access, in order for all members and interested parties to have the access they needed. For a future project, where data might be more sentitive, this approach should definately be revisited. ---
 
 ### Question 27
 
