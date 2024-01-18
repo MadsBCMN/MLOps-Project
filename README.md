@@ -124,7 +124,6 @@ The directory structure of the project looks like this:
 │   │   ├── __init__.py
 │   │   └── model.py       <- Function for returning the model architecture
 │   │
-│   ├── outputs            <- Stored Hydra outputs
 │   ├── data_drifting.py   <- Script to check for data drifting
 │   ├── predict_model.py   <- Predicts a tumor type based on a provided raw image
 │   ├── sweep.yaml         <- Configuraion file for hyperparameter sweep
