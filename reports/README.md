@@ -532,7 +532,7 @@ Monitoring the Cloud Build, frontend and predict services for availability and l
 > Answer:
 
 --- Student s194663 was in charge of finding the dataset, and setting up date preparation pipeline and preprossesing. 
-Student s184208 had the main responsibility for many of the cloud integrations, working with data buckers etc.
+Student s184208 had the main responsibility for many of the cloud integrations, working with data buckets etc.
 Student s194665 was responsible for creating the application and make sure that everything worked smoothly. 
 
 All members have contributed to the vast majority of the project.
