@@ -377,17 +377,10 @@ In practice we used Google cloud build to build our docker images and push them 
 >
 > Answer:
 
---- We used GCP Bucket for data storage and integrated it with our data version control system. It facilitates efficient data management. We created a trigger workflow in Cloud Build to build Docker images automatically and push them to the Container Registry. This automates the process, streamlines the deployment pipeline, and ensures consistency and reliability. Additionally, we deployed our FastAPI and frontend application for model inference using Cloud Run Services, which enables us to scale our API based on demand and ensure optimal performance. For training we used Vertex AI, which gives granular control of machine ressources, and also Cloud Run Job, which is a serverless platform for running containerized jobs.
+--- We used GCP Bucket for data storage and integrated it with our data version control system. It facilitates efficient data management. We created a trigger workflow in Cloud Build to build Docker images automatically and push them to the Container Registry. This automates the process, streamlines the deployment pipeline, and ensures consistency and reliability. Additionally, we deployed our FastAPI and frontend application for model inference using Cloud Run Services, which enables us to scale our API based on demand and ensure optimal performance and availability. For training we used Vertex AI, which gives granular control of machine ressources, and also Cloud Run Job, which is a serverless platform for running containerized jobs.
+Audit Logging on the bucket logs changes, such as creating, updating, and deleting objects. The Eventarc API is used to filter logs for change in training data, and then 
+we used Pub/Sub to publish and subscribe to messages from Eventarc, which are then used to trigger Google Cloud Workflows for building and deploying new training and predict images, training a new model and deploying a new predict API with the new model. We also used Cloud Monitoring to monitor the latency and availaiblity of our frontend and predict API and also latency of cloud build. ---
 
-Google Cloud Workflows
-Pub/Sub
-Audit Logging
-Eventarc API
-Logging
-IAM
-Finally, we used Cloud Monitoring to monitor the performance of our deployed model.
-
-**NOTE REVISIT** ---
 
 ### Question 18
 
@@ -400,9 +393,9 @@ Finally, we used Cloud Monitoring to monitor the performance of our deployed mod
 > *We used the compute engine to run our ... . We used instances with the following hardware: ... and we started the*
 > *using a custom container: ...*
 >
-> Answer:w
+> Answer:
 
---- question 18 fill here ---
+--- By deploying our container images to Compute engine VMs we used it to test our docker images, both with and without GPU. Compute engine is the most versatile of the GCP options to run compute, as one has full control over ressources and configuration of servers. This can be a benefit, but leaves maintanence to the Ops team, and also generally incurres higher cloud costs. When flexibility of full control over the server is not needed, another option is to go serverless. This leaves configuration and scaling to the GCP, with only the most important parameters, such as number of vCPUS and RAM to be configured. For the final setup, we decided to go serverless with Cloud run job, as GPUs were not needed to train our ResNet18 model and Cloud run services is a perfect match for our frontend web app and predict API, ensuring scale and costs only on use. ---
 
 ### Question 19
 
