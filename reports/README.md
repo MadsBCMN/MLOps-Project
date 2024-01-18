@@ -393,9 +393,9 @@ we used Pub/Sub to publish and subscribe to messages from Eventarc, which are th
 > *We used the compute engine to run our ... . We used instances with the following hardware: ... and we started the*
 > *using a custom container: ...*
 >
-> Answer:w
+> Answer:
 
---- question 18 fill here ---
+--- By deploying our container images to Compute engine VMs we used it to test our docker images, both with and without GPU. Compute engine is the most versatile of the GCP options to run compute, as one has full control over ressources and configuration of servers. This can be a benefit, but leaves maintanence to the Ops team, and also generally incurres higher cloud costs. When flexibility of full control over the server is not needed, another option is to go serverless. This leaves configuration and scaling to the GCP, with only the most important parameters, such as number of vCPUS and RAM to be configured. For the final setup, we decided to go serverless with Cloud run job, as GPUs were not needed to train our ResNet18 model and Cloud run services is a perfect match for our frontend web app and predict API, ensuring scale and costs only on use. ---
 
 ### Question 19
 
