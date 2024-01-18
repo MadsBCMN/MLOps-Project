@@ -474,7 +474,7 @@ The reponse is: {"class":"glioma","class_label":0}. This means that the image is
 >
 > Answer:
 
---- question 24 fill here ---
+--- We made sure to set permissions for the whole group project in the IAM module, so we could collaborate on the cloud project. $25.21 was used in credits, the cost breakdown report showed that Cloud run and Cloud Storage were the biggest expenses. Sparing use of Compute Engine VMs reduced costs. Addtional cost savings could be achieved by adjusting the storage class from Standard to Nearline for less frequently used data, or defining a retention policy for deleting old images in the Container Registry. ---
 
 ## Overall discussion of project
 
