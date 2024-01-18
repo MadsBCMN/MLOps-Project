@@ -476,7 +476,7 @@ The reponse is: {"class":"glioma","class_label":0}. This means that the image is
 >
 > Answer:
 
---- We made sure to set permissions for the whole group project in the IAM module, so we could collaborate on the cloud project. $25.21 was used in credits, the cost breakdown report showed that Cloud run and Cloud Storage were the biggest expenses. Sparing use of Compute Engine VMs reduced costs. Addtional cost savings could be achieved by adjusting the storage class from Standard to Nearline for less frequently used data, or defining a retention policy for deleting old images in the Container Registry. ---
+--- We made sure to set permissions for the whole group project in the IAM module, so we could collaborate on the cloud project. $25.21 was used in credits, the cost breakdown report showed that Cloud run and Cloud Storage were the biggest expenses. Sparing use of Compute Engine VMs reduced costs. We implemented Lifecycle rules on the Artifact Registry storage bucket, that move old files from Standard to Nearline storage, and this will save costs in the long run. Further cost savings could be achieved by defining a retention policy for deleting old images in the Container Registry. ---
 
 ## Overall discussion of project
 
