@@ -51,6 +51,12 @@ Install the necessary dependencies:
 pip install -r requirements.txt
 ```
 
+Get the data:
+
+```bash
+dvc pull
+```
+
 Run the following command to start the predict API:
 
 ```bash
