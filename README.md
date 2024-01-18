@@ -63,7 +63,7 @@ Run the following command to start the predict API:
 uvicorn app.main:app --host 0.0.0.0 --port 8000
 ```
 
-Change backend = http://localhost:8000/classify" in frontend.py and run the following command:
+Change ```backend = http://localhost:8000/classify``` in frontend.py and run the following command:
 
 ```bash
 streamlit run app/frontend.py
