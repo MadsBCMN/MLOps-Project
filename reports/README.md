@@ -377,17 +377,10 @@ In practice we used Google cloud build to build our docker images and push them 
 >
 > Answer:
 
---- We used GCP Bucket for data storage and integrated it with our data version control system. It facilitates efficient data management. We created a trigger workflow in Cloud Build to build Docker images automatically and push them to the Container Registry. This automates the process, streamlines the deployment pipeline, and ensures consistency and reliability. Additionally, we deployed our FastAPI and frontend application for model inference using Cloud Run Services, which enables us to scale our API based on demand and ensure optimal performance. For training we used Vertex AI, which gives granular control of machine ressources, and also Cloud Run Job, which is a serverless platform for running containerized jobs.
+--- We used GCP Bucket for data storage and integrated it with our data version control system. It facilitates efficient data management. We created a trigger workflow in Cloud Build to build Docker images automatically and push them to the Container Registry. This automates the process, streamlines the deployment pipeline, and ensures consistency and reliability. Additionally, we deployed our FastAPI and frontend application for model inference using Cloud Run Services, which enables us to scale our API based on demand and ensure optimal performance and availability. For training we used Vertex AI, which gives granular control of machine ressources, and also Cloud Run Job, which is a serverless platform for running containerized jobs.
+Audit Logging on the bucket logs changes, such as creating, updating, and deleting objects. The Eventarc API is used to filter logs for change in training data, and then 
+we used Pub/Sub to publish and subscribe to messages from Eventarc, which are then used to trigger Google Cloud Workflows for building and deploying new training and predict images, training a new model and deploying a new predict API with the new model. We also used Cloud Monitoring to monitor the latency and availaiblity of our frontend and predict API and also latency of cloud build. ---
 
-Google Cloud Workflows
-Pub/Sub
-Audit Logging
-Eventarc API
-Logging
-IAM
-Finally, we used Cloud Monitoring to monitor the performance of our deployed model.
-
-**NOTE REVISIT** ---
 
 ### Question 18
 
