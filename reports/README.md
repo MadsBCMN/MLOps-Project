@@ -460,7 +460,7 @@ The reponse is: {"class":"glioma","class_label":0}. This means that the image is
 >
 > Answer:
 
---- question 23 fill here ---
+--- We successfully implemented a monitoring system for our performance metrics, ensuring consistent and reliable service delivery. Specifically, we established two Service Level Objectives (SLOs) to monitor performance comprehensively for our prediction services and frontend interfaces. We monitor latency and availability, ensuring that both elements are within specified limits. Furthermore, we have set up alert if any of these fall below specified threshholds. This alert triggers if a latency below 95% for the current calendar month, or if availability drops below 99% for any consecutive three-day period. Monitoring these service level objectives is extremely important metric for the system, and down-time and other issues are very disturbing for the end-user. ---
 
 ### Question 24
 
