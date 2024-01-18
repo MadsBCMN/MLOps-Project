@@ -335,7 +335,9 @@ In the first screenshot, we see the table of the sweep table runs sorted accordi
 docker build -f dockerfiles/predict.dockerfile -t predict:latest .
 
 To push the conatainer to Google Cloud Registry, we used:
+
 docker tag predict gcr.io/dtumlops-410818/predict
+
 docker push gcr.io/dtumlops-410818/predict
 
 And to run the container, we used:
@@ -535,5 +537,5 @@ Monitoring the Cloud Build, frontend and predict services for availability and l
 Student s184208 had the main responsibility for many of the cloud integrations, working with workflow etc.
 Student s194665 was responsible for creating the application and make sure that everything worked smoothly. 
 
-All members have contributed to the vast majority of the project.
+All members have contributed equally to the overall of the project.
  ---
