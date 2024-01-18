@@ -516,7 +516,7 @@ This command sends an image file (file.jpg) to the deployed FastAPI application 
 >
 > Answer:
 
---- When working both with google drive and cloud storage, we experienced some issues related to auchentication. We initially did the setup for the project on one Google account. However, other team members would then experience problems with auchentication when using dvc pull for instance. We ended up using a setup with loose security measures, in order for all members to have the acess they needed. For a future project, where data might be more sentitive, this approach should definately be revisited. Furthermore, we experienced some issues with the dvc config files. The config file for the cloud storage would hash every single picture in our dataset with wrong URLs. We ended up fixing this by storing our data in a ZIP file---
+--- When working both with google drive and cloud storage, we experienced some issues related to auchentication. We initially did the setup for the project on one Google account. However, other team members would then experience problems with auchentication when using dvc pull for instance. We ended up using a setup with loose security measures, in order for all members to have the acess they needed. For a future project, where data might be more sentitive, this approach should definately be revisited.---
 
 ### Question 27
 
