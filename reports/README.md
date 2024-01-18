@@ -174,7 +174,7 @@ end of the project.
 >
 > Answer:
 
---- We complied with PEP8 coding standards for code quality and format using global variables, docstring comments, typing, and informative comments. Consistent coding standards are essential to improve readability, maintainability, and collaboration in larger projects. They promote a consistent style, making it easier for others to understand and contribute. Adhering to good code quality also makes controlling and automating debugging easier. Lastly, we use ruff as a tool to check if you code is PEP8 compliant. ---
+--- We aim to comply with PEP8 coding standards for code quality and format using docstring comments, typing, and informative comments. Consistent coding standards are essential to improve readability, maintainability, and collaboration in larger projects. They promote a consistent style, making it easier for others to understand and contribute. Adhering to good code quality also makes controlling and automating debugging easier. Lastly, we use ruff as a tool to check if the code is PEP8 compliant. ---
 
 ## Version control
 
@@ -404,7 +404,7 @@ we used Pub/Sub to publish and subscribe to messages from Eventarc, which are th
 >
 > Answer:
 
---- ![GCP Bucket](figures/data.png) ---
+--- ![GCP Bucket](figures/buckets.png) ![GCP Bucket](figures/data.png) ---
 
 ### Question 20
 
@@ -422,8 +422,7 @@ we used Pub/Sub to publish and subscribe to messages from Eventarc, which are th
 >
 > Answer:
 
---- ![GCP Triggers](figures/trigger.png)
-![GCP trigger history](figures/history.png)  ---
+--- ![GCP Triggers](figures/trigger.png) ![GCP trigger history](figures/history.png)  ---
 
 ### Question 22
 
@@ -439,13 +438,14 @@ we used Pub/Sub to publish and subscribe to messages from Eventarc, which are th
 >
 > Answer:
 
---- For deployment, we made our image classification model into a FastAPI application. Initially, we tested the deployment locally, ensuring the service was operational on our machines, and then we used Google Cloud Platform (GCP) for deployment.
-Users can make a POST request to the /classify endpoint to invoke the deployed service. For example, using the curl command:
-bashCopy code:
+--- For deployment of prediction we used FastAPI to expose the classifation of images in an OpenAPI compliant way. The Streamlit frontend which connects through the predict API to facilitate users to upload images and get the classification. This setup enbales the scalability and modularity of the application through the separation of services. Both were initialy tested locally and then deployed as Cloud Run Services.
+The predict API service is invoked by the fronten streamlit app and can also be invoked directly using the following command:
 
-curl -X POST -F "file=@/path/file.jpg" http://127.0.0.1:8000/classify
+curl -X POST -F 'file=@data/example_images/Te-gl_0010.jpg;type=image/jpeg' https://predict-3aoiym5c7a-lz.a.run.app/classify
 
-This command sends an image file (file.jpg) to the deployed FastAPI application for classification. The service then processes the image, predicts its class, and returns the result in JSON format.  ---
+This command sends a POST request to the /classify endpoint with an MRI image file (Te-gl_0010.jpg) to the deployed FastAPI application for classification.
+
+The reponse is: {"class":"glioma","class_label":0}. This means that the image is correctly classified as a glioma tumor, and the class label is 0. ---
 
 ### Question 23
 
