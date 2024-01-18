@@ -48,10 +48,22 @@ conda create -n myenv python=3.11 && conda activate myenv
 Install the necessary dependencies:
 
 ```bash
-pip install -r requirements_frontend.txt
+pip install -r requirements.txt
 ```
 
-Run the following command:
+Get the data:
+
+```bash
+dvc pull
+```
+
+Run the following command to start the predict API:
+
+```bash
+uvicorn app.main:app --host 0.0.0.0 --port 8000
+```
+
+Change backend = http://localhost:8000/classify" in frontend.py and run the following command:
 
 ```bash
 streamlit run app/frontend.py
